@@ -1,118 +1,120 @@
-#if false
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tsinswreng.SrcGen.Dict.Attributes;
+using Tsinswreng.SrcGen.Tools;
 
 
 namespace Tsinswreng.SrcGen.Dict.CodeGenerator;
 
 [Generator]
-public class DictGenerator {
-	public void Execute(GeneratorExecutionContext context) {
-
-		var dictContextClasses = context.Compilation.SyntaxTrees
-			.SelectMany(syntaxTree => syntaxTree.GetRoot().DescendantNodes())
-			.OfType<ClassDeclarationSyntax>()
-			.Where(cds => cds.AttributeLists
-				.SelectMany(al => al.Attributes)
-				.Any(attr => attr.Name.ToString() == "DictType"))
-			.ToList();
-
-		foreach (var classDeclaration in dictContextClasses) {
-			// 获取类名和命名空间
-			var className = classDeclaration.Identifier.Text;
-			var namespaceName = GetNamespace(classDeclaration);
-
-			// 获取 DictTypeAttribute 的 TargetType
-			var targetType = GetTargetType(classDeclaration, context);
-
-			if (targetType != null) {
-				// 生成扩展方法
-				var sourceCode = GenerateExtensionMethod(namespaceName, className, targetType, context);
-				context.AddSource($"{className}Extensions.g.cs", sourceCode);
-			}
-		}
-	}
-
-
-	private string GetNamespace(ClassDeclarationSyntax classDeclaration) {
-		SyntaxNode? potentialNamespaceParent = classDeclaration.Parent;
-		while (potentialNamespaceParent != null &&
-				!(potentialNamespaceParent is NamespaceDeclarationSyntax) &&
-				!(potentialNamespaceParent is FileScopedNamespaceDeclarationSyntax)) {
-			potentialNamespaceParent = potentialNamespaceParent.Parent;
-		}
-
-		if (potentialNamespaceParent is NamespaceDeclarationSyntax namespaceDeclaration) {
-			return namespaceDeclaration.Name.ToString();
-		} else if (potentialNamespaceParent is FileScopedNamespaceDeclarationSyntax fileScopedNamespaceDeclaration) {
-			return fileScopedNamespaceDeclaration.Name.ToString();
-		}
-
-		return string.Empty;
-	}
-
-	private ITypeSymbol? GetTargetType(ClassDeclarationSyntax classDeclaration, GeneratorExecutionContext context) {
-		foreach (var attributeList in classDeclaration.AttributeLists) {
-			foreach (var attribute in attributeList.Attributes) {
-				if (attribute.Name.ToString() == "DictType" && attribute.ArgumentList != null && attribute.ArgumentList.Arguments.Count > 0) {
-					var typeOfExpression = attribute.ArgumentList.Arguments[0].Expression as TypeOfExpressionSyntax;
-					if (typeOfExpression != null) {
-						var typeSymbol = context.Compilation.GetTypeByMetadataName(typeOfExpression.Type.ToString());
-						return typeSymbol;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	private string GenerateExtensionMethod(string namespaceName, string className, ITypeSymbol targetType, GeneratorExecutionContext context) {
-		var targetTypeName = targetType.Name;
-		var properties = targetType.GetMembers().OfType<IPropertySymbol>().Where(p => !p.IsStatic && p.DeclaredAccessibility == Accessibility.Public);
-
-		StringBuilder source = new StringBuilder();
-		source.AppendLine("using System.Collections.Generic;");
-		source.AppendLine();
-
-		if (!string.IsNullOrEmpty(namespaceName)) {
-			source.AppendLine($"namespace {namespaceName}");
-			source.AppendLine("{");
-		}
-
-		source.AppendLine($" public static class {className}Extensions");
-		source.AppendLine(" {");
-		source.AppendLine($"  public static Dictionary<string, object?> ToDict<T>(this {className} ctx, T obj) where T : class");
-		source.AppendLine("  {");
-		source.AppendLine("   var dict = new Dictionary<string, object?>();");
-		source.AppendLine($"   if (obj is not {targetTypeName} target)");
-		source.AppendLine("   {");
-		source.AppendLine("    return dict;");
-		source.AppendLine("   }");
-
-		foreach (var property in properties) {
-			source.AppendLine($"   dict[\"{property.Name}\"] = target.{property.Name};");
-		}
-
-		source.AppendLine("   return dict;");
-		source.AppendLine("  }");
-		source.AppendLine(" }");
-
-		if (!string.IsNullOrEmpty(namespaceName)) {
-			source.AppendLine("}");
-		}
-
-		return source.ToString();
-	}
-
+public class DictGenerator : ISourceGenerator {
+	public Ctx_DictGen Ctx { get;set; } = new();
 	public void Initialize(GeneratorInitializationContext context) {
-		// No initialization required
+		// 注册语法接收器来捕获标记了DictTypeAttribute的类
+		context.RegisterForSyntaxNotifications(() => new DictTypeSyntaxReceiver());
+	}
+
+	public void Execute(GeneratorExecutionContext context) {
+		if (context.SyntaxReceiver is not DictTypeSyntaxReceiver receiver){
+			return;
+		}
+
+		// 处理每个标记了DictType的类
+		foreach (var classDecl in receiver.DictCtxClasses) {
+			var model = context.Compilation.GetSemanticModel(classDecl.SyntaxTree);
+			var classSymbol = model.GetDeclaredSymbol(classDecl) as INamedTypeSymbol;
+
+			// 收集所有DictTypeAttribute中指定的类型
+			if(classSymbol == null){
+				continue;
+			}
+			var targetTypes = GetTargetTypes(classSymbol);
+
+			// 为每个目标类型生成扩展方法
+			GenerateExtensionMethods(context, targetTypes);
+		}
+	}
+
+	private void GenerateExtensionMethods(
+		GeneratorExecutionContext context
+		,IEnumerable<INamedTypeSymbol> targetTypes
+	){
+		foreach (var typeSymbol in targetTypes) {
+			var code = BuildExtensionMethodCode(typeSymbol);
+			context.AddSource($"{typeSymbol.Name}_DictExtensions.g.cs", code);
+		}
+	}
+
+	public static string GenUsingStatement(string Namespace){
+		if(Namespace == "<global namespace>"){
+			return "";
+		}
+		return $"using {Namespace};\n";
+	}
+
+	private string BuildExtensionMethodCode(INamedTypeSymbol typeSymbol) {
+		var properties = typeSymbol.GetMembers()
+			.OfType<IPropertySymbol>()
+			.Where(p => p.DeclaredAccessibility == Accessibility.Public);
+
+		var Namespace = typeSymbol.ContainingNamespace.ToDisplayString();
+
+
+		var dictEntries = properties.Select(p =>
+			$"""["{p.Name}"] = obj.{p.Name},""");
+
+		return $$"""
+using System.Collections.Generic;
+{{GenUsingStatement(Namespace)}}
+namespace YourNamespace{
+	public static partial class DictExtensions{
+		public static Dictionary<string, object> ToDict(this DictCtx ctx, {{typeSymbol}} obj){
+			return new Dictionary<string, object>{
+				{{string.Join("\n",dictEntries)}}
+			};
+		}
+	}
+}
+""";
+	}
+
+
+	private IEnumerable<INamedTypeSymbol> GetTargetTypes(INamedTypeSymbol classSymbol) {
+		// 提取所有 DictType 特性
+		var attributes = classSymbol.GetAttributes()
+			.Where(attr => attr.AttributeClass?.Name == nameof(DictType));
+
+		// 解析特性中的 Type 参数
+		foreach (var attr in attributes) {
+			var typeArg = attr.ConstructorArguments.FirstOrDefault();
+			if (typeArg.Value is INamedTypeSymbol targetType) {
+				yield return targetType;
+			}
+		}
 	}
 
 
 }
 
-#endif
+// 语法接收器，用于定位所有包含DictType特性的类
+class DictTypeSyntaxReceiver : ISyntaxReceiver {
+	public List<ClassDeclarationSyntax> DictCtxClasses { get; } = new();
+
+	public void OnVisitSyntaxNode(SyntaxNode syntaxNode) {
+		if (syntaxNode is ClassDeclarationSyntax classDecl &&
+			classDecl.AttributeLists.Any(a =>
+				a.Attributes.Any(attr =>
+					attr.Name.ToString() ==  nameof(DictType) //"DictType"
+				)
+			)
+		) {
+			DictCtxClasses.Add(classDecl);
+			//Logger.Append("DictTypeSyntaxReceiver");+
+			//Logger.Append(syntaxNode.ToString()); 完整ʹ類定義 源碼
+		}
+	}
+}
