@@ -32,10 +32,7 @@ public class DictGen: ISourceGenerator{
 				var GenDictCtx = new GenDictCtx(
 					Ctx_DictCtx:Ctx_DictCtx
 				);
-				//Logger.Append("GenDictCtx.Run();>");
 				GenDictCtx.Run();
-				//Logger.Append("GenDictCtx.Run();<");
-				//ExeCtx.AddSource();
 			}
 		}
 		catch (System.Exception e){

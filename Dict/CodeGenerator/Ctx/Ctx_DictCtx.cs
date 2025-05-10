@@ -85,6 +85,22 @@ $$"""
 		return cls;
 	}
 
+	public str MkGeneric(){
+		var N = Const_Name.Inst;
+		var S = SymbolWithNamespace.Inst;
+return
+$$"""
+	public static {{S.Dictionary}}<string, object> {{N.ToDict}}<T>(T obj){
+		var fn = {{N.TypeFnSaver}}<T>.Fn_ToDict;
+		return fn(obj);
+	}
+	public static T Assign<T>(T obj, {{S.Dictionary}}<string, object> dict){
+		var fn = {{N.TypeFnSaver}}<T>.Fn_Assign;
+		return fn(obj, dict);
+	}
+""";
+	}
+
 	public str MkTypeFnSaver(){
 		IEnumerable<Ctx_TargetType> Ctx_TargetTypes = Ctx_DictCtx.Ctx_TargetTypes;
 		var GenTargetType = new GenTargetType();
@@ -96,13 +112,14 @@ $$"""
 			ElseIfs.Add(elseIf);
 		}
 		var S = SymbolWithNamespace.Inst;
+		var N = Const_Name.Inst;
 return
 $$"""
-	public partial class TypeFnSaver<T>{
+	public partial class {{N.TypeFnSaver}}<T>{
 		public static System.Func<T, {{S.Dictionary}}<string, object>> Fn_ToDict;
 		public static System.Func<T, {{S.Dictionary}}<string, object>, T> Fn_Assign;
 
-		static TypeFnSaver(){
+		static {{N.TypeFnSaver}}(){
 			if(false){}
 			{{str.Join("\n",ElseIfs)}}
 		}
@@ -117,6 +134,7 @@ $$"""
 $$"""
 public partial class {{ClsName}}{
 	{{Code_MkTypeFnSaver}}
+	{{MkGeneric()}}
 }
 """;
 

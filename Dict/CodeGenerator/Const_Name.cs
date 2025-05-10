@@ -8,6 +8,7 @@ public class Const_Name{
 
 	public str ToDict = nameof(ToDict);
 	public str Assign = nameof(Assign);
+	public str TypeFnSaver = nameof(TypeFnSaver);
 }
 
 public class SymbolWithNamespace{
