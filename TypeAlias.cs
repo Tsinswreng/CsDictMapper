@@ -10,9 +10,13 @@ global using u64 = System.UInt64;
 global using f32 = System.Single;
 global using f64 = System.Double;
 global using str = System.String;
-global using nil = System.Object;
+global using nil = Tsinswreng.SrcGen.Nil_;
+global using static Tsinswreng.SrcGen.Nil_;
 //#pragma warning restore CS8981
-global using static Nil_;
-public struct Nil_{
+namespace Tsinswreng.SrcGen{
+
+public class Nil_{
 	public const nil Nil = null!;
+}
+
 }

@@ -16,5 +16,5 @@ public class SymbolWithNamespace{
 	public static SymbolWithNamespace Inst => _Inst??= new SymbolWithNamespace();
 
 	public str Func = "System.Func";
-	public str Dictionary = "System.Collections.Generic.Dictionary";
+	public str Dictionary = "System.Collections.Generic.IDictionary";
 }

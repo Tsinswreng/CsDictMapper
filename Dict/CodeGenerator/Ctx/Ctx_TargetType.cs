@@ -25,7 +25,10 @@ public class Ctx_TargetType{
 		var typeSymbol = TypeSymbol;
 		PublicProps = typeSymbol.GetMembers()
 			.OfType<IPropertySymbol>()
-			.Where(p => p.DeclaredAccessibility == Accessibility.Public)
+			.Where(
+				p => p.DeclaredAccessibility == Accessibility.Public
+				&& !p.IsStatic
+			)
 		;
 		_Inited = true;
 		return this;
