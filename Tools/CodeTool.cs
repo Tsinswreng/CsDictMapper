@@ -54,4 +54,18 @@ public class CodeTool{
 			}
 		}
 	}
+
+	public static IEnumerable<IPropertySymbol> GetPropsWithParent(
+		INamedTypeSymbol classSymbol
+	){
+		var properties = new List<IPropertySymbol>();
+		var currentType = classSymbol;
+		while (currentType != null) {
+			properties.AddRange(currentType.GetMembers()
+				.OfType<IPropertySymbol>()
+				.Where(p => p.DeclaredAccessibility == Accessibility.Public && !p.IsStatic));
+			currentType = currentType.BaseType;
+		}
+		return properties;
+	}
 }

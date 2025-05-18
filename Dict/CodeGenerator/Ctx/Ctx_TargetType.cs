@@ -23,13 +23,14 @@ public class Ctx_TargetType{
 	public Ctx_TargetType Init(){
 		if(_Inited){return this;}
 		var typeSymbol = TypeSymbol;
-		PublicProps = typeSymbol.GetMembers()
-			.OfType<IPropertySymbol>()
-			.Where(
-				p => p.DeclaredAccessibility == Accessibility.Public
-				&& !p.IsStatic
-			)
-		;
+		// PublicProps = typeSymbol.GetMembers()
+		// 	.OfType<IPropertySymbol>()
+		// 	.Where(
+		// 		p => p.DeclaredAccessibility == Accessibility.Public
+		// 		&& !p.IsStatic
+		// 	)
+		// ;//需有父類成員
+		PublicProps = Tools.CodeTool.GetPropsWithParent(typeSymbol);
 		_Inited = true;
 		return this;
 	}
