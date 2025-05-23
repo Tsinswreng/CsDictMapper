@@ -64,10 +64,11 @@ public class GenTargetType{
 			$"""["{p.Name}"] = obj.{p.Name},""")
 		;
 		var N = Const_Name.Inst;
+		var S = SymbolWithNamespace.Inst;
 		var MethodCode =
 $$"""
-		public static Dictionary<string, object> {{N.ToDict}} ({{typeSymbol}} obj){
-			return new Dictionary<string, object>{
+		public static {{S.IDictionary}}<string, {{S.ObjectN}}> {{N.ToDict}} ({{typeSymbol}} obj){
+			return new {{S.Dictionary}}<string, {{S.ObjectN}}>{
 {{string.Join("\n",dictEntries)}}
 			};
 		}
@@ -84,9 +85,10 @@ $$"""
 			$""" o.{p.Name} = ({p.Type.ToDisplayString()})d["{p.Name}"]; """)
 		;
 		var N = Const_Name.Inst;
+		var S = SymbolWithNamespace.Inst;
 		var MethodCode =
 $$"""
-		public static {{typeSymbol}} {{N.Assign}} ({{typeSymbol}} o, Dictionary<string, object> d){
+		public static {{typeSymbol}} {{N.Assign}} ({{typeSymbol}} o, {{S.IDictionary}}<string, {{S.ObjectN}}> d){
 {{string.Join("\n",dictEntries)}}
 			return o;
 		}
@@ -97,14 +99,15 @@ $$"""
 	public str MkTypeCacheElseIf(){
 		var TypeSymbol = Ctx_TargetType.TypeSymbol;
 		var N = Const_Name.Inst;
+		var S = SymbolWithNamespace.Inst;
 		return
 $$"""
 else if(typeof(T) == typeof({{TypeSymbol}})){
 	Fn_ToDict = (obj) => {
-		return {{N.ToDict}}(({{TypeSymbol}})(object)obj);
+		return {{N.ToDict}}(({{TypeSymbol}})({{S.ObjectN}})obj);
 	};
 	Fn_Assign = (obj, dict) => {
-		var o = ({{TypeSymbol}})(object)obj;
+		var o = ({{TypeSymbol}})({{S.ObjectN}})obj;
 		{{N.Assign}}(o, dict);
 		return obj;
 	};

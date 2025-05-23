@@ -89,12 +89,13 @@ $$"""
 		var N = Const_Name.Inst;
 		var S = SymbolWithNamespace.Inst;
 return
+//TODO 用完整限定名
 $$"""
-	public static {{S.Dictionary}}<string, object> {{N.ToDict}}<T>(T obj){
+	public static {{S.IDictionary}}<string, {{S.ObjectN}}> {{N.ToDict}}T<T>(T obj){
 		var fn = {{N.TypeFnSaver}}<T>.Fn_ToDict;
 		return fn(obj);
 	}
-	public static T Assign<T>(T obj, {{S.Dictionary}}<string, object> dict){
+	public static T AssignT<T>(T obj, {{S.IDictionary}}<string, {{S.ObjectN}}> dict){
 		var fn = {{N.TypeFnSaver}}<T>.Fn_Assign;
 		return fn(obj, dict);
 	}
@@ -116,8 +117,8 @@ $$"""
 return
 $$"""
 	public partial class {{N.TypeFnSaver}}<T>{
-		public static System.Func<T, {{S.Dictionary}}<string, object>> Fn_ToDict;
-		public static System.Func<T, {{S.Dictionary}}<string, object>, T> Fn_Assign;
+		public static System.Func<T, {{S.IDictionary}}<string, {{S.ObjectN}}>> Fn_ToDict;
+		public static System.Func<T, {{S.IDictionary}}<string, {{S.ObjectN}}>, T> Fn_Assign;
 
 		static {{N.TypeFnSaver}}(){
 			if(false){}
@@ -170,7 +171,7 @@ $$"""
 	public nil Run(){
 		str FileCode = "";
 		str FileName = "";
-		var NoWarn = "#pragma warning disable CS8618, CS8600, CS8601, CS8604\n";
+		var NoWarn = "#pragma warning disable CS8618, CS8600, CS8601, CS8604, CS8605\n";
 		try{
 			var DictCtxName = (Ctx_DictCtx.DictTypeClassSymbol?.ToString()??"");
 			var i = 0;
