@@ -21,7 +21,7 @@ public class DictGen: ISourceGenerator{
 			// Logger.Append("Receiver.DictCtxClasses.Count");
 			// Logger.Append(Receiver.DictCtxClasses.Count+"");
 			foreach(var DictCtxClass in Receiver.DictCtxClasses){
-				var Ctx_DictCtx = new Ctx_DictCtx(
+				var Ctx_DictCtx = new CtxDictCtx(
 					ExeCtx: ExeCtx
 					,DictCtxClass: DictCtxClass
 				).Init();

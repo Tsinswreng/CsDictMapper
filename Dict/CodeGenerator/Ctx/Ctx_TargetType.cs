@@ -1,4 +1,5 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -7,12 +8,12 @@ using Tsinswreng.SrcGen.Tools;
 namespace Tsinswreng.SrcGen.Dict.CodeGenerator.Ctx;
 
 
-public class Ctx_TargetType{
+public class CtxTargetType{
 
-	public Ctx_DictCtx Ctx_DictCtx{get;set;}
+	public CtxDictCtx Ctx_DictCtx{get;set;}
 	public INamedTypeSymbol TypeSymbol{get;set;}
-	public Ctx_TargetType(
-		Ctx_DictCtx Ctx_DictCtx
+	public CtxTargetType(
+		CtxDictCtx Ctx_DictCtx
 		,INamedTypeSymbol TypeSymbol
 	){
 		this.Ctx_DictCtx = Ctx_DictCtx;
@@ -20,7 +21,7 @@ public class Ctx_TargetType{
 	}
 
 	bool _Inited = false;
-	public Ctx_TargetType Init(){
+	public CtxTargetType Init(){
 		if(_Inited){return this;}
 		var typeSymbol = TypeSymbol;
 		// PublicProps = typeSymbol.GetMembers()
@@ -42,22 +43,22 @@ public class Ctx_TargetType{
 
 public class GenTargetType{
 
-	public Ctx_TargetType Ctx_TargetType{get;set;}
+	public CtxTargetType CtxTargetType{get;set;}
 
 	public GenTargetType(){}
-	public GenTargetType(Ctx_TargetType Ctx_TargetType){
+	public GenTargetType(CtxTargetType Ctx_TargetType){
 		Init(Ctx_TargetType);
 	}
 
-	public GenTargetType Init(Ctx_TargetType Ctx_TargetType){
-		this.Ctx_TargetType = Ctx_TargetType;
+	public GenTargetType Init(CtxTargetType Ctx_TargetType){
+		this.CtxTargetType = Ctx_TargetType;
 		Ctx_TargetType.Init();
 		return this;
 	}
 
 	public str MkMethod_ToDict(){
-		var typeSymbol = Ctx_TargetType.TypeSymbol;
-		var properties = Ctx_TargetType.PublicProps;
+		var typeSymbol = CtxTargetType.TypeSymbol;
+		var properties = CtxTargetType.PublicProps;
 		// Logger.Append((properties==null)+"");
 		// Logger.Append((properties.Count())+"");
 		var dictEntries = properties.Select(p =>
@@ -78,11 +79,16 @@ $$"""
 
 
 	public str MkMethod_Assign(){
-		var typeSymbol = Ctx_TargetType.TypeSymbol;
-		var properties = Ctx_TargetType.PublicProps;
+// 		IDictionary<str, int?> d = null;
+// {var s = d.TryGetValue("v", out var v)? v : default;}
+// { var s  = (long)(d.TryGetValue("FKeyType", out var Got)? Got: default) ; }
+
+		var typeSymbol = CtxTargetType.TypeSymbol;
+		var properties = CtxTargetType.PublicProps;
 		var dictEntries = properties.Select(p =>
 			//$""" o.{p.Name} = d["{p.Name}"] as {p.Type.ToDisplayString()}; """)
-			$""" o.{p.Name} = ({p.Type.ToDisplayString()})d["{p.Name}"]; """)
+			//$""" o.{p.Name} = ({p.Type.ToDisplayString()})d["{p.Name}"]; """)
+"{"+$""" o.{p.Name} = ({p.Type.ToDisplayString()})(d.TryGetValue("{p.Name}", out var Got)? Got: o.{p.Name}) ; """+"}")
 		;
 		var N = Const_Name.Inst;
 		var S = SymbolWithNamespace.Inst;
@@ -97,7 +103,7 @@ $$"""
 	}
 
 	public str MkTypeCacheElseIf(){
-		var TypeSymbol = Ctx_TargetType.TypeSymbol;
+		var TypeSymbol = CtxTargetType.TypeSymbol;
 		var N = Const_Name.Inst;
 		var S = SymbolWithNamespace.Inst;
 		return

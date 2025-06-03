@@ -7,14 +7,14 @@ using Tsinswreng.SrcGen.Tools;
 
 namespace Tsinswreng.SrcGen.Dict.CodeGenerator.Ctx;
 
-public class Ctx_DictCtx{
+public class CtxDictCtx{
 
 	/// <summary>
 	/// 包含[DictType(typeof(TargetType))]特性的类(DictCtx)
 	/// </summary>
 	public ClassDeclarationSyntax DictCtxClass { get;set; }
 	public GeneratorExecutionContext ExeCtx{get;set;}
-	public Ctx_DictCtx(
+	public CtxDictCtx(
 		GeneratorExecutionContext ExeCtx
 		,ClassDeclarationSyntax DictCtxClass
 	){
@@ -23,7 +23,7 @@ public class Ctx_DictCtx{
 		Init();
 	}
 	bool _Inited = false;
-	public Ctx_DictCtx? Init(){
+	public CtxDictCtx? Init(){
 		if(_Inited){
 			return this;
 		}
@@ -35,7 +35,7 @@ public class Ctx_DictCtx{
 		DictCtxNamespaceStr = DictTypeClassSymbol?.ContainingNamespace?.ToDisplayString()??"";
 		TargetTypes = GenDictCtx.YieldTypeWithDictTypeAttr(DictTypeClassSymbol!);
 		foreach (var TargetType in TargetTypes) {
-			var Ctx_TargetType = new Ctx_TargetType(
+			var Ctx_TargetType = new CtxTargetType(
 				Ctx_DictCtx:this
 				,TypeSymbol:TargetType
 			).Init();
@@ -49,7 +49,7 @@ public class Ctx_DictCtx{
 	public INamedTypeSymbol? DictTypeClassSymbol{get;set;} = null!;
 	public str DictCtxNamespaceStr{get;set;} = "";
 	public IEnumerable<INamedTypeSymbol> TargetTypes{get;set;} = null!;
-	public IList<Ctx_TargetType> Ctx_TargetTypes{get;set;} = new List<Ctx_TargetType>();
+	public IList<CtxTargetType> Ctx_TargetTypes{get;set;} = new List<CtxTargetType>();
 	public IList<str> TypesElseIfs{get;set;} = new List<str>();
 
 }
@@ -60,13 +60,13 @@ public class GenDictCtx{
 	/// <summary>
 	///
 	/// </summary>
-	public Ctx_DictCtx Ctx_DictCtx{get;set;}
+	public CtxDictCtx Ctx_DictCtx{get;set;}
 
-	public GenDictCtx(Ctx_DictCtx Ctx_DictCtx){
+	public GenDictCtx(CtxDictCtx Ctx_DictCtx){
 		this.Ctx_DictCtx = Ctx_DictCtx;
 	}
 
-	public str MkClass(Ctx_TargetType Ctx_TargetType){
+	public str MkClass(CtxTargetType Ctx_TargetType){
 		var ClsName = Ctx_DictCtx.DictCtxClass.Identifier.Text;
 		//var methods = MethodCodes.Select(m=>m);
 		var GenTargetType = new GenTargetType(Ctx_TargetType);
@@ -103,7 +103,7 @@ $$"""
 	}
 
 	public str MkTypeFnSaver(){
-		IEnumerable<Ctx_TargetType> Ctx_TargetTypes = Ctx_DictCtx.Ctx_TargetTypes;
+		IEnumerable<CtxTargetType> Ctx_TargetTypes = Ctx_DictCtx.Ctx_TargetTypes;
 		var GenTargetType = new GenTargetType();
 		IList<str> ElseIfs = Ctx_DictCtx.TypesElseIfs;
 		foreach (var Ctx_TargetType in Ctx_TargetTypes){
@@ -162,7 +162,7 @@ $$"""
 		return CodeTool.YieldTypeWithAttr(classSymbol, nameof(DictType));
 	}
 
-	public str MkFile(Ctx_TargetType Ctx_TargetType){
+	public str MkFile(CtxTargetType Ctx_TargetType){
 		var ClsCode = MkClass(Ctx_TargetType);
 		var NsCode = MkNs(ClsCode);
 		return NsCode;

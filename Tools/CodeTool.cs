@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Tsinswreng.SrcGen.Tools;
 
-public class CodeTool{
+public static class CodeTool{
 
 
 	public static str SurroundWithNamespace(str NsStr, string Code){
@@ -64,6 +65,22 @@ public class CodeTool{
 			properties.AddRange(currentType.GetMembers()
 				.OfType<IPropertySymbol>()
 				.Where(p => p.DeclaredAccessibility == Accessibility.Public && !p.IsStatic));
+			currentType = currentType.BaseType;
+		}
+		return properties;
+	}
+
+
+	public static IEnumerable<IPropertySymbol> GetPropsWithParent(
+		this INamedTypeSymbol classSymbol
+		,Func<IPropertySymbol,bool> predicate
+	){
+		var properties = new List<IPropertySymbol>();
+		var currentType = classSymbol;
+		while (currentType != null) {
+			properties.AddRange(currentType.GetMembers()
+				.OfType<IPropertySymbol>()
+				.Where(predicate));
 			currentType = currentType.BaseType;
 		}
 		return properties;
