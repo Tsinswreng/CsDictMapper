@@ -1,8 +1,8 @@
 using System.Reflection;
 using Microsoft.CodeAnalysis;
-using Tsinswreng.SrcGen.Dict.CodeGenerator.Ctx;
-using Tsinswreng.SrcGen.Tools;
-namespace Tsinswreng.SrcGen.Dict.CodeGenerator;
+using Tsinswreng.CsSrcGen.Dict.CodeGenerator.Ctx;
+using Tsinswreng.CsSrcGen.Tools;
+namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator;
 
 
 [Generator]

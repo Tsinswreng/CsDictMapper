@@ -2,10 +2,10 @@
 // using System.Collections.Generic;
 // using Microsoft.CodeAnalysis;
 // using Microsoft.CodeAnalysis.CSharp.Syntax;
-// using Tsinswreng.SrcGen.Dict.Attributes;
-// using Tsinswreng.SrcGen.Tools;
+// using Tsinswreng.CsSrcGen.Dict.Attributes;
+// using Tsinswreng.CsSrcGen.Tools;
 
-// namespace Tsinswreng.SrcGen.Ctor.CodeGen;
+// namespace Tsinswreng.CsSrcGen.Ctor.CodeGen;
 
 // public class CtxCtor{
 

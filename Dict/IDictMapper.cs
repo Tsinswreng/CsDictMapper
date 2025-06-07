@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Tsinswreng.SrcGen.Dict;
+namespace Tsinswreng.CsSrcGen.Dict;
 
 public interface IDictMapper{
 	public IDictionary<str, object?> ToDictT<T>(T obj);

@@ -10,24 +10,24 @@
 // using System.Text;
 // #pragma warning disable RS1035
 // public class G{
-// 	public static string Path = "./Tsinswreng.SrcGen.log.txt";
+// 	public static string Path = "./Tsinswreng.CsSrcGen.log.txt";
 // 	public static void Write(string s){
 // 		File.WriteAllText(Path, s);
 // 	}
 
 // 	public static void Write(string Path, string s){
-// 		File.WriteAllText("./Tsinswreng.SrcGen/"+Path, s);
+// 		File.WriteAllText("./Tsinswreng.CsSrcGen/"+Path, s);
 // 	}
 
 // }
 
-// namespace Tsinswreng.SrcGen {
+// namespace Tsinswreng.CsSrcGen {
 // 	[Generator]
 // 	public class HelloGenerator : ISourceGenerator {
 // 		public void Initialize(GeneratorInitializationContext context) {
 // 			//Debugger.Launch();
 // 			// 注册语法接收器以收集类声明
-// 			Directory.CreateDirectory("./Tsinswreng.SrcGen");
+// 			Directory.CreateDirectory("./Tsinswreng.CsSrcGen");
 // 			context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
 // 		}
 

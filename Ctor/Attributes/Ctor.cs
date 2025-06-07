@@ -1,4 +1,4 @@
-namespace Tsinswreng.SrcGen.Ctor.Attributes;
+namespace Tsinswreng.CsSrcGen.Ctor.Attributes;
 
 using System;
 

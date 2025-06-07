@@ -1,6 +1,6 @@
 // using Microsoft.CodeAnalysis;
 
-// namespace Tsinswreng.SrcGen.Dict.CodeGenerator.Ctx;
+// namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator.Ctx;
 
 // public class Ctx_Gen{
 // 	public GeneratorExecutionContext ExeCtx{get;set;}

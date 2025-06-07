@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Tsinswreng.SrcGen.Tools;
+using Tsinswreng.CsSrcGen.Tools;
 
-namespace Tsinswreng.SrcGen.Dict.CodeGenerator.Ctx;
+namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator.Ctx;
 
 
 public class CtxTargetType{

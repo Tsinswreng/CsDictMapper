@@ -1,4 +1,4 @@
-namespace Tsinswreng.SrcGen.Dict.Attributes{
+namespace Tsinswreng.CsSrcGen.Dict.Attributes{
 
 using System;
 

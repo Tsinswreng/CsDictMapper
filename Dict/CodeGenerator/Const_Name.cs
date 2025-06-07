@@ -1,6 +1,6 @@
 using System;
 
-namespace Tsinswreng.SrcGen.Dict.CodeGenerator;
+namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator;
 
 public class Const_Name{
 	protected static Const_Name? _Inst = null;

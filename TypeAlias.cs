@@ -10,10 +10,10 @@ global using u64 = System.UInt64;
 global using f32 = System.Single;
 global using f64 = System.Double;
 global using str = System.String;
-global using nil = Tsinswreng.SrcGen.Nil_;
-global using static Tsinswreng.SrcGen.Nil_;
+global using nil = Tsinswreng.CsSrcGen.Nil_;
+global using static Tsinswreng.CsSrcGen.Nil_;
 //#pragma warning restore CS8981
-namespace Tsinswreng.SrcGen{
+namespace Tsinswreng.CsSrcGen{
 
 public class Nil_{
 	public const nil Nil = null!;

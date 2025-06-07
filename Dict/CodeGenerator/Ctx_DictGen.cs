@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Tsinswreng.SrcGen.Dict.Attributes;
-using Tsinswreng.SrcGen.Tools;
+using Tsinswreng.CsSrcGen.Dict.Attributes;
+using Tsinswreng.CsSrcGen.Tools;
 
-namespace Tsinswreng.SrcGen.Dict.CodeGenerator;
+namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator;
 
 public class Ctx_DictGen{
 	/// <summary>

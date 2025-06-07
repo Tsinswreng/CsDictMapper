@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Tsinswreng.SrcGen.Dict.Attributes;
+using Tsinswreng.CsSrcGen.Dict.Attributes;
 
-namespace Tsinswreng.SrcGen.Dict.CodeGenerator;
+namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator;
 // 语法接收器，用于定位所有包含DictType特性的类(一般只有一個)
 public class DictTypeSyntaxReceiver : ISyntaxReceiver {
 	public List<ClassDeclarationSyntax> DictCtxClasses { get; } = new();

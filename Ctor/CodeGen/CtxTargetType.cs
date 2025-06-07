@@ -2,9 +2,9 @@
 // using System.Collections.Generic;
 // using System.Linq;
 // using Microsoft.CodeAnalysis;
-// using Tsinswreng.SrcGen.Tools;
+// using Tsinswreng.CsSrcGen.Tools;
 
-// namespace Tsinswreng.SrcGen.Ctor.CodeGen;
+// namespace Tsinswreng.CsSrcGen.Ctor.CodeGen;
 
 
 // public class CtxTargetType{
