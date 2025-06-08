@@ -26,6 +26,10 @@
 	</PackageReference>
 </ItemGroup>
 
+<ItemGroup>
+	<Compile Include="../Tsinswreng.CsTypeAlias/TypeAlias.cs" />
+</ItemGroup>
+
 
 <!-- <ItemGroup>
 	<Compile Remove="Generated\**\*.cs" />

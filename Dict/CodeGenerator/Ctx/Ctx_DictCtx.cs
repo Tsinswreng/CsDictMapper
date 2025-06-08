@@ -188,7 +188,7 @@ $$"""
 			}
 			var Code_MkTypeFnSaver = MkFile_TypeFnSaver();
 			Ctx_DictCtx.ExeCtx.AddSource(DictCtxName+"-TypeFnSaver.cs", NoWarn+Code_MkTypeFnSaver);
-			return Nil;
+			return NIL;
 		}
 		catch (System.Exception e){
 			// Logger.Append(FileName);

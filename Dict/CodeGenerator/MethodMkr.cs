@@ -40,7 +40,7 @@ public class MethodMkr{
 		DictTypeClassSymbol = SemanticModel.GetDeclaredSymbol(Ctx.DictCtxClass);
 		DictCtxNamespaceStr = DictTypeClassSymbol?.ContainingNamespace?.ToDisplayString()??"";
 
-		return Nil;
+		return NIL;
 	}
 
 	str MkMethod_ToDict(){
