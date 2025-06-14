@@ -2,13 +2,20 @@ using System;
 
 namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator;
 
-public class Const_Name{
-	protected static Const_Name? _Inst = null;
-	public static Const_Name Inst => _Inst??= new Const_Name();
+public class ConstName{
+	protected static ConstName? _Inst = null;
+	public static ConstName Inst => _Inst??= new ConstName();
 
 	public str ToDict = nameof(ToDict);
+	public str ToDictT = nameof(ToDictT);
+	public str GetTypeDict = nameof(GetTypeDict);
+	public str GetTypeDictT = nameof(GetTypeDictT);
 	public str Assign = nameof(Assign);
+	public str AssignT = nameof(AssignT);
 	public str TypeFnSaver = nameof(TypeFnSaver);
+	public str FnToDict = nameof(FnToDict);
+	public str FnAssign = nameof(FnAssign);
+	public str FnGetTypeDict = nameof(FnGetTypeDict);
 }
 
 public class SymbolWithNamespace{
@@ -19,5 +26,6 @@ public class SymbolWithNamespace{
 	public str IDictionary = "System.Collections.Generic.IDictionary";
 	public str Dictionary = "System.Collections.Generic.Dictionary";
 	public str ObjectN = "System.Object?";
+	public str Type = "System.Type";
 }
 

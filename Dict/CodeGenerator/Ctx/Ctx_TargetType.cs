@@ -56,6 +56,57 @@ public class GenTargetType{
 		return this;
 	}
 
+/// <summary>
+/// 解析完整ʹ類型名芝可置于typeof()中者
+/// typeof()對于引用類型 則不支持帶可空問號 如typeof(string)合法洏typeof(string?)非法
+/// 例:T 爲 int? 即返 System.Int32? ; T 潙 int 即返 System.Int32
+/// T 潙 string 抑 string? 皆返 System.String
+/// </summary>
+/// <param name="T"></param>
+/// <returns></returns>
+	public static str ResolveFullTypeFitsTypeof(ITypeSymbol T){
+		//if (T == null) return string.Empty;
+		if (T.IsValueType){
+			// 判断是否是 Nullable<T>
+			if (T.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T){
+				var namedType = (INamedTypeSymbol)T;
+				var innerType = namedType.TypeArguments[0];
+				// 返回可空值类型比如 "System.Int32?"
+				return innerType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) + "?";
+			}else{
+				// 普通值类型，比如 "System.Int32"
+				return T.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+			}
+		}//~if (T.IsValueType)
+		else{
+			// 引用类型，不加问号，比如 "System.String"
+			return T.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+		}
+	}
+
+	public str MkMethod_GetTypeDict(){
+		var typeSymbol = CtxTargetType.TypeSymbol;
+		var properties = CtxTargetType.PublicProps;
+		// Logger.Append((properties==null)+"");
+		// Logger.Append((properties.Count())+"");
+		var dictEntries = properties.Select(p =>{
+			var TypeName = ResolveFullTypeFitsTypeof(p.Type);
+			return $"""["{p.Name}"] = typeof({TypeName}),""";
+		});
+
+		var N = ConstName.Inst;
+		var S = SymbolWithNamespace.Inst;
+		var MethodCode =
+$$"""
+		public static {{S.IDictionary}}<string, {{S.Type}}> {{N.GetTypeDict}}({{typeSymbol}}? obj){//只蔿函數褈載、實非需傳此參數
+			return new {{S.Dictionary}}<string, {{S.Type}}>{
+{{string.Join("\n",dictEntries)}}
+			};
+		}
+""";
+		return MethodCode;
+	}
+
 	public str MkMethod_ToDict(){
 		var typeSymbol = CtxTargetType.TypeSymbol;
 		var properties = CtxTargetType.PublicProps;
@@ -64,7 +115,7 @@ public class GenTargetType{
 		var dictEntries = properties.Select(p =>
 			$"""["{p.Name}"] = obj.{p.Name},""")
 		;
-		var N = Const_Name.Inst;
+		var N = ConstName.Inst;
 		var S = SymbolWithNamespace.Inst;
 		var MethodCode =
 $$"""
@@ -90,7 +141,7 @@ $$"""
 			//$""" o.{p.Name} = ({p.Type.ToDisplayString()})d["{p.Name}"]; """)
 "{"+$""" o.{p.Name} = ({p.Type.ToDisplayString()})(d.TryGetValue("{p.Name}", out var Got)? Got: o.{p.Name}) ; """+"}")
 		;
-		var N = Const_Name.Inst;
+		var N = ConstName.Inst;
 		var S = SymbolWithNamespace.Inst;
 		var MethodCode =
 $$"""
@@ -104,21 +155,26 @@ $$"""
 
 	public str MkTypeCacheElseIf(){
 		var TypeSymbol = CtxTargetType.TypeSymbol;
-		var N = Const_Name.Inst;
+		var N = ConstName.Inst;
 		var S = SymbolWithNamespace.Inst;
 		return
 $$"""
 else if(typeof(T) == typeof({{TypeSymbol}})){
-	Fn_ToDict = (obj) => {
+	{{N.FnToDict}} = (obj) => {
 		return {{N.ToDict}}(({{TypeSymbol}})({{S.ObjectN}})obj);
 	};
-	Fn_Assign = (obj, dict) => {
+	{{N.FnAssign}} = (obj, dict) => {
 		var o = ({{TypeSymbol}})({{S.ObjectN}})obj;
 		{{N.Assign}}(o, dict);
 		return obj;
+	};
+	{{N.FnGetTypeDict}} = ()=>{
+		var o = ({{TypeSymbol}})({{S.ObjectN}})null!;
+		return {{N.GetTypeDict}}(o);
 	};
 }
 """;
 	}
 
 }
+

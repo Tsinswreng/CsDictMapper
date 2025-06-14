@@ -60,19 +60,20 @@ public class GenDictCtx{
 	/// <summary>
 	///
 	/// </summary>
-	public CtxDictCtx Ctx_DictCtx{get;set;}
+	public CtxDictCtx CtxDictCtx{get;set;}
 
 	public GenDictCtx(CtxDictCtx Ctx_DictCtx){
-		this.Ctx_DictCtx = Ctx_DictCtx;
+		this.CtxDictCtx = Ctx_DictCtx;
 	}
 
 	public str MkClass(CtxTargetType Ctx_TargetType){
-		var ClsName = Ctx_DictCtx.DictCtxClass.Identifier.Text;
+		var ClsName = CtxDictCtx.DictCtxClass.Identifier.Text;
 		//var methods = MethodCodes.Select(m=>m);
 		var GenTargetType = new GenTargetType(Ctx_TargetType);
 		List<str> methods = [
 			GenTargetType.MkMethod_ToDict()
 			,GenTargetType.MkMethod_Assign()
+			,GenTargetType.MkMethod_GetTypeDict()
 		];
 		var cls =
 $$"""
@@ -86,39 +87,44 @@ $$"""
 	}
 
 	public str MkGeneric(){
-		var N = Const_Name.Inst;
+		var N = ConstName.Inst;
 		var S = SymbolWithNamespace.Inst;
 return
 //TODO 用完整限定名
 $$"""
-	public static {{S.IDictionary}}<string, {{S.ObjectN}}> {{N.ToDict}}T<T>(T obj){
-		var fn = {{N.TypeFnSaver}}<T>.Fn_ToDict;
+	public static {{S.IDictionary}}<string, {{S.ObjectN}}> {{N.ToDictT}}<T>(T obj){
+		var fn = {{N.TypeFnSaver}}<T>.{{N.FnToDict}};
 		return fn(obj);
 	}
-	public static T AssignT<T>(T obj, {{S.IDictionary}}<string, {{S.ObjectN}}> dict){
-		var fn = {{N.TypeFnSaver}}<T>.Fn_Assign;
+	public static T {{N.AssignT}}<T>(T obj, {{S.IDictionary}}<string, {{S.ObjectN}}> dict){
+		var fn = {{N.TypeFnSaver}}<T>.{{N.FnAssign}};
 		return fn(obj, dict);
+	}
+	public static {{S.IDictionary}}<string, {{S.Type}}> {{N.GetTypeDictT}} <T>(){
+		var fn = {{N.TypeFnSaver}}<T>.{{N.FnGetTypeDict}};
+		return fn();
 	}
 """;
 	}
 
 	public str MkTypeFnSaver(){
-		IEnumerable<CtxTargetType> Ctx_TargetTypes = Ctx_DictCtx.Ctx_TargetTypes;
+		IEnumerable<CtxTargetType> CtxTargetTypes = CtxDictCtx.Ctx_TargetTypes;
 		var GenTargetType = new GenTargetType();
-		IList<str> ElseIfs = Ctx_DictCtx.TypesElseIfs;
-		foreach (var Ctx_TargetType in Ctx_TargetTypes){
+		IList<str> ElseIfs = CtxDictCtx.TypesElseIfs;
+		foreach (var CtxTargetType in CtxTargetTypes){
 			//GenTargetType.Ctx_TargetType = Ctx_TargetType;
-			GenTargetType.Init(Ctx_TargetType);
+			GenTargetType.Init(CtxTargetType);
 			var elseIf = GenTargetType.MkTypeCacheElseIf();
 			ElseIfs.Add(elseIf);
 		}
 		var S = SymbolWithNamespace.Inst;
-		var N = Const_Name.Inst;
+		var N = ConstName.Inst;
 return
 $$"""
 	public partial class {{N.TypeFnSaver}}<T>{
-		public static System.Func<T, {{S.IDictionary}}<string, {{S.ObjectN}}>> Fn_ToDict;
-		public static System.Func<T, {{S.IDictionary}}<string, {{S.ObjectN}}>, T> Fn_Assign;
+		public static {{S.Func}}<T, {{S.IDictionary}}<string, {{S.ObjectN}}>> {{N.FnToDict}};
+		public static {{S.Func}}<T, {{S.IDictionary}}<string, {{S.ObjectN}}>, T> {{N.FnAssign}};
+		public static {{S.Func}}<{{S.IDictionary}}<string, {{S.Type}}>> {{N.FnGetTypeDict}};
 
 		static {{N.TypeFnSaver}}(){
 			if(false){}
@@ -130,7 +136,7 @@ $$"""
 
 	public str MkFile_TypeFnSaver(){
 		var Code_MkTypeFnSaver = MkTypeFnSaver();
-		var ClsName = Ctx_DictCtx.DictCtxClass.Identifier.Text;
+		var ClsName = CtxDictCtx.DictCtxClass.Identifier.Text;
 		var ClsCode =
 $$"""
 public partial class {{ClsName}}{
@@ -146,7 +152,7 @@ public partial class {{ClsName}}{
 		return
 $$"""
 {{CodeTool.SurroundWithNamespace(
-	Ctx_DictCtx.DictCtxNamespaceStr
+	CtxDictCtx.DictCtxNamespaceStr
 	,ClassCode
 )}}
 """;
@@ -173,9 +179,9 @@ $$"""
 		str FileName = "";
 		var NoWarn = "#pragma warning disable CS8618, CS8600, CS8601, CS8604, CS8605\n";
 		try{
-			var DictCtxName = (Ctx_DictCtx.DictTypeClassSymbol?.ToString()??"");
+			var DictCtxName = (CtxDictCtx.DictTypeClassSymbol?.ToString()??"");
 			var i = 0;
-			foreach(var Ctx_TargetType in Ctx_DictCtx.Ctx_TargetTypes){
+			foreach(var Ctx_TargetType in CtxDictCtx.Ctx_TargetTypes){
 				FileCode = MkFile(Ctx_TargetType);
 				FileName = DictCtxName
 					+"-"+ Ctx_TargetType.TypeSymbol.ToString()
@@ -183,11 +189,11 @@ $$"""
 				;
 
 				var guid = Guid.NewGuid().ToString();
-				Ctx_DictCtx.ExeCtx.AddSource(FileName, NoWarn+FileCode);
+				CtxDictCtx.ExeCtx.AddSource(FileName, NoWarn+FileCode);
 				i++;
 			}
 			var Code_MkTypeFnSaver = MkFile_TypeFnSaver();
-			Ctx_DictCtx.ExeCtx.AddSource(DictCtxName+"-TypeFnSaver.cs", NoWarn+Code_MkTypeFnSaver);
+			CtxDictCtx.ExeCtx.AddSource(DictCtxName+"-TypeFnSaver.cs", NoWarn+Code_MkTypeFnSaver);
 			return NIL;
 		}
 		catch (System.Exception e){
