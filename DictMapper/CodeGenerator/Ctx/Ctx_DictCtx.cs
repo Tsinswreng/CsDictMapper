@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Tsinswreng.CsSrcGen.Dict.Attributes;
 using Tsinswreng.CsSrcGen.Tools;
 
-namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator.Ctx;
+namespace Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx;
 
 public class CtxDictCtx{
 

@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Tsinswreng.CsSrcGen.Tools;
 
-namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator.Ctx;
+namespace Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx;
 
 
 public class CtxTargetType{

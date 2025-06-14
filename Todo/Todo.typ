@@ -6,3 +6,10 @@
 internal partial class DictCtx{}
 ```
 目前用internal即報錯、須用public
+
+
+=
+[2025-06-14T19:54:08.635+08:00_W24-6]
+
+- 徂支持多個DictMapper合併
+- 模仿TblMgr之泛型字典
