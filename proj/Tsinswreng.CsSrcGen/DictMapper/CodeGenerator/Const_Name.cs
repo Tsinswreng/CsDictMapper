@@ -19,6 +19,10 @@ public class ConstName{
 	public str NsDict = nameof(Tsinswreng)+"."+nameof(CsSrcGen)+"."+nameof(Dict);
 	public str IDictForOneType = nameof(IDictForOneType);
 	public str TargetType = nameof(TargetType);
+	public str Type_Mapper = nameof(Type_Mapper);
+	public str IDictMapper = nameof(IDictMapper);
+	public str DictMapper = nameof(DictMapper);
+
 }
 
 public class SymbolWithNamespace{

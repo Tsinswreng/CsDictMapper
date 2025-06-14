@@ -9,9 +9,17 @@ namespace Tsinswreng.CsSrcGen.Tools;
 public static class CodeTool{
 
 
+	public static str CombineNsEtSymbol(INamespaceSymbol NsSymbol, str Symbol){
+		if(NsSymbol.IsGlobalNamespace){
+			return Symbol;
+		}
+		return NsSymbol.ToDisplayString() + "." + Symbol;
+	}
+
+
 	public static str SurroundWithNamespace(str NsStr, string Code){
 		var strNs = NsStr;
-		if(strNs == "<global namespace>"){
+		if(strNs == "" || strNs == "<global namespace>"){
 			return Code;
 		}
 		return $"namespace {strNs} {{\n{Code}\n}}";
@@ -85,4 +93,34 @@ public static class CodeTool{
 		}
 		return properties;
 	}
+
+
+/// <summary>
+/// 解析完整ʹ類型名芝可置于typeof()中者
+/// typeof()對于引用類型 則不支持帶可空問號 如typeof(string)合法洏typeof(string?)非法
+/// 例:T 爲 int? 即返 System.Int32? ; T 潙 int 即返 System.Int32
+/// T 潙 string 抑 string? 皆返 System.String
+/// </summary>
+/// <param name="T"></param>
+/// <returns></returns>
+	public static str ResolveFullTypeFitsTypeof(ITypeSymbol T){
+		//if (T == null) return string.Empty;
+		if (T.IsValueType){
+			// 判断是否是 Nullable<T>
+			if (T.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T){
+				var namedType = (INamedTypeSymbol)T;
+				var innerType = namedType.TypeArguments[0];
+				// 返回可空值类型比如 "System.Int32?"
+				return innerType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) + "?";
+			}else{
+				// 普通值类型，比如 "System.Int32"
+				return T.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+			}
+		}//~if (T.IsValueType)
+		else{
+			// 引用类型，不加问号，比如 "System.String"
+			return T.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+		}
+	}
+
 }

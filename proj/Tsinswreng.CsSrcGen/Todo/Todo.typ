@@ -13,3 +13,4 @@ internal partial class DictCtx{}
 
 - 徂支持多個DictMapper合併
 - 模仿TblMgr之泛型字典
+- 測試頂層命名空間
