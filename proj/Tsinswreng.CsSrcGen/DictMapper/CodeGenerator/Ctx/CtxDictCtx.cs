@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Tsinswreng.CsSrcGen.Dict.Attributes;
+using Tsinswreng.CsSrcGen.DictMapper.Attributes;
 using Tsinswreng.CsSrcGen.Tools;
 
 namespace Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx;
@@ -89,14 +89,15 @@ public class GenDictCtx{
 // 	}
 
 	public str MkClass(CtxTargetType CtxTargetType){
-		var ClsName = CtxDictCtx.DictCtxClass.Identifier.Text;
+		//var ClsName = CtxDictCtx.DictCtxClass.Identifier.Text;
 		var GenTargetType = new GenTargetType(CtxTargetType);
 		var N = ConstName.Inst;
 		var S = SymbolWithNamespace.Inst;
+		var ClsName = N.__TsinswrengDictMapper;
 		//DictCtxNsStr
 		var ClsBody = GenTargetType.MkClsBody_DictMapperForOneType();
 return $$"""
-public class {{ClsName}} : {{N.NsDict}}.{{N.IDictForOneType}}{
+public partial class {{ClsName}} : global::{{N.NsDictMapper}}.{{N.IDictMapperForOneType}}{
 	protected static {{ClsName}}? _Inst = null;
 	public static {{ClsName}} Inst => _Inst??= new {{ClsName}}();
 	{{ClsBody}}
@@ -134,7 +135,7 @@ public class {{ClsName}} : {{N.NsDict}}.{{N.IDictForOneType}}{
 		List<str> R = [];
 		foreach (var CtxTargetType in CtxTargetTypes){
 			GenTargetType.Init(CtxTargetType);
-			var U = GenTargetType.MkTypeCacheDictAdd();
+			var U = GenTargetType.MkTypeCacheDictAdd(CtxDictCtx);
 			R.Add(U);
 		}
 		return str.Join("\n",R);
@@ -173,8 +174,8 @@ public class {{ClsName}} : {{N.NsDict}}.{{N.IDictForOneType}}{
 		var N = ConstName.Inst;
 		var Ns = CtxDictCtx.DictCtxNsStr;
 var Cls = $$"""
-public partial class {{ClsName}}: {{N.DictMapper}} {
-	public {{ClsName}}{
+public partial class {{ClsName}}: {{N.NsDictMapper}}.{{N.DictMapper}} {
+	public {{ClsName}}(){
 		{{MkType_MapperAdd()}}
 	}
 }
@@ -203,16 +204,16 @@ public partial class {{ClsName}}: {{N.DictMapper}} {
 	/// <param name="ClassCode"></param>
 	/// <param name="TargetNs"></param>
 	/// <returns></returns>
-	public str MkNs(str ClassCode, INamespaceSymbol TargetNs){
+	public str MkNs(str ClassCode, ITypeSymbol Target){
 		var R = "";
 		R = CodeTool.SurroundWithNamespace(
-			TargetNs.ToDisplayString()
+			CtxDictCtx.DictCtxNsStr+"._."+Target
 			,ClassCode
 		);
-		R = CodeTool.SurroundWithNamespace(
-			CtxDictCtx.DictCtxNsStr
-			,R
-		);
+		// R = CodeTool.SurroundWithNamespace(
+		// 	CtxDictCtx.DictCtxNsStr
+		// 	,R
+		// );
 		return R;
 	}
 
@@ -238,11 +239,18 @@ public partial class {{ClsName}}: {{N.DictMapper}} {
 
 	public str MkFile(CtxTargetType CtxTargetType){
 		var ClsCode = MkClass(CtxTargetType);
-		var NsCode = MkNs(ClsCode, CtxTargetType.TypeSymbol.ContainingNamespace);
+		var NsCode = MkNs(ClsCode, CtxTargetType.TypeSymbol);
 		return NsCode;
 	}
 
+	protected nil AddSrc(GeneratorExecutionContext ExeCtx, str FileName, str Code){
+		Logger.Debug(FileName, Code);
+		ExeCtx.AddSource(FileName, Code);
+		return NIL;
+	}
+
 	public nil Run(){
+		//Logger.Append("Run");//t
 		str FileCode = "";
 		str FileName = "";
 		var NoWarn = "#pragma warning disable CS8618, CS8600, CS8601, CS8604, CS8605\n";
@@ -256,12 +264,12 @@ public partial class {{ClsName}}: {{N.DictMapper}} {
 					+ ".cs"
 				;
 				//var guid = Guid.NewGuid().ToString();
-				CtxDictCtx.ExeCtx.AddSource(FileName, NoWarn+FileCode);
+				AddSrc(CtxDictCtx.ExeCtx, FileName, NoWarn+FileCode);
 				i++;
 			}
 			//var Code_MkTypeFnSaver = MkFile_TypeFnSaver();
 			var Code_Main = MkFile_Main();
-			CtxDictCtx.ExeCtx.AddSource(DictCtxName+"-.cs", NoWarn+Code_Main);
+			AddSrc(CtxDictCtx.ExeCtx, DictCtxName+"-.cs", NoWarn+Code_Main);
 			return NIL;
 		}
 		catch (System.Exception e){

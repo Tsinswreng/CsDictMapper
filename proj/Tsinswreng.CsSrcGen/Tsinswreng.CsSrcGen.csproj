@@ -27,7 +27,7 @@
 </ItemGroup>
 
 <ItemGroup>
-	<Compile Include="../Tsinswreng.CsTypeAlias/TypeAlias.cs" />
+	<Compile Include="../TypeAlias.cs" />
 </ItemGroup>
 
 

@@ -1,0 +1,58 @@
+Run
+Tsinswreng.CsSrcGen.LogDir/Root.UserDictCtx-Root.NsA.ClassA.cs
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\_code\CsNgaq\Tsinswreng.CsSrcGen\proj\Tsinswreng.CsSrcGen.Test\Tsinswreng.CsSrcGen\Tsinswreng.CsSrcGen.LogDir\Root.UserDictCtx-Root.NsA.ClassA.cs'.
+   at Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx.GenDictCtx.Run() in E:\_code\CsNgaq\Tsinswreng.CsSrcGen\proj\Tsinswreng.CsSrcGen\DictMapper\CodeGenerator\Ctx\CtxDictCtx.cs:line 278
+   at Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.DictGen.Execute(GeneratorExecutionContext ExeCtx) in E:\_code\CsNgaq\Tsinswreng.CsSrcGen\proj\Tsinswreng.CsSrcGen\DictMapper\CodeGenerator\DictGen.cs:line 35
+Run
+Tsinswreng.CsSrcGen.LogDir/Root.UserDictCtx-Root.NsA.ClassA.cs
+#pragma warning disable CS8618, CS8600, CS8601, CS8604, CS8605
+namespace Root {
+namespace Root.NsA {
+public class UserDictCtx : Tsinswreng.CsSrcGen.Dict.IDictForOneType{
+	protected static UserDictCtx? _Inst = null;
+	public static UserDictCtx Inst => _Inst??= new UserDictCtx();
+	
+
+	public virtual Type TargetType {get;} = typeof(global::Root.NsA.ClassA);
+
+	public virtual System.Collections.Generic.IDictionary<string, object?> ToDict(object obj){
+		if(obj is not Root.NsA.ClassA o){
+			throw new ArgumentException("obj is not of type Root.NsA.ClassA");
+		}
+		return Static.ToDict(o);
+	}
+
+	public virtual System.Collections.Generic.IDictionary GetTypeDict(){
+		return Static.GetTypeDict(null);
+	}
+
+	public virtual object Assign(object obj, System.Collections.Generic.IDictionary<string, object?> dict){
+		if(obj is not Root.NsA.ClassA o){
+			throw new ArgumentException("obj is not of type Root.NsA.ClassA");
+		}
+		return Static.Assign(o, dict);
+	}
+
+	public class Static{
+				public static System.Collections.Generic.IDictionary<string, System.Type> GetTypeDict(Root.NsA.ClassA? obj){//只蔿函數褈載、實非需傳此參數
+			return new System.Collections.Generic.Dictionary<string, System.Type>{
+
+			};
+		}
+				public static System.Collections.Generic.IDictionary<string, System.Object?> ToDict (Root.NsA.ClassA obj){
+			return new System.Collections.Generic.Dictionary<string, System.Object?>{
+
+			};
+		}
+				public static Root.NsA.ClassA Assign (Root.NsA.ClassA o, System.Collections.Generic.IDictionary<string, System.Object?> d){
+
+			return o;
+		}
+	}
+
+}
+}
+}
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\_code\CsNgaq\Tsinswreng.CsSrcGen\proj\Tsinswreng.CsSrcGen.Test\Tsinswreng.CsSrcGen\Tsinswreng.CsSrcGen.LogDir\Root.UserDictCtx-Root.NsA.ClassA.cs'.
+   at Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx.GenDictCtx.Run() in E:\_code\CsNgaq\Tsinswreng.CsSrcGen\proj\Tsinswreng.CsSrcGen\DictMapper\CodeGenerator\Ctx\CtxDictCtx.cs:line 278
+   at Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.DictGen.Execute(GeneratorExecutionContext ExeCtx) in E:\_code\CsNgaq\Tsinswreng.CsSrcGen\proj\Tsinswreng.CsSrcGen\DictMapper\CodeGenerator\DictGen.cs:line 35

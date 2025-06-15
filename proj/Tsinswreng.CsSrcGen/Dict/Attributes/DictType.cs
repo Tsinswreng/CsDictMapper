@@ -7,6 +7,7 @@ using System;
 /// 緣用及nameof、斯類ʹ名ˋ 須同於 作特性ⁿ引用旹厎
 /// 如引用時用[DictType(...)]則斯類ʹ名則須潙DictType、叵作DictTypeAttribute
 /// </summary>
+[Obsolete("改用Tsinswreng.CsSrcGen.DictMapper.Attributes.DictType")]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
 public class DictType:Attribute{
 	public Type TargetType { get; }

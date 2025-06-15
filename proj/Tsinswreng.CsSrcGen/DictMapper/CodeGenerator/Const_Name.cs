@@ -16,12 +16,13 @@ public class ConstName{
 	public str FnToDict = nameof(FnToDict);
 	public str FnAssign = nameof(FnAssign);
 	public str FnGetTypeDict = nameof(FnGetTypeDict);
-	public str NsDict = nameof(Tsinswreng)+"."+nameof(CsSrcGen)+"."+nameof(Dict);
-	public str IDictForOneType = nameof(IDictForOneType);
+	public str NsDictMapper = nameof(Tsinswreng)+"."+nameof(CsSrcGen)+"."+nameof(DictMapper);
+	public str IDictMapperForOneType = nameof(IDictMapperForOneType);
 	public str TargetType = nameof(TargetType);
 	public str Type_Mapper = nameof(Type_Mapper);
 	public str IDictMapper = nameof(IDictMapper);
 	public str DictMapper = nameof(DictMapper);
+	public str __TsinswrengDictMapper = nameof(__TsinswrengDictMapper);
 
 }
 

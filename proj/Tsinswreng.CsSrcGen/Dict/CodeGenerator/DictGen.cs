@@ -5,7 +5,7 @@ using Tsinswreng.CsSrcGen.Tools;
 namespace Tsinswreng.CsSrcGen.Dict.CodeGenerator;
 
 
-[Generator]
+//[Generator] //停用于 2025-06-14T22:56:34.592+08:00_W24-6
 public class DictGen: ISourceGenerator{
 	public void Initialize(GeneratorInitializationContext context) {
 		// 注册语法接收器来捕获标记了DictTypeAttribute的类

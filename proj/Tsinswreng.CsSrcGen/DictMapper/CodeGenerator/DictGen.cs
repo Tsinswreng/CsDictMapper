@@ -1,6 +1,6 @@
 using System.Reflection;
 using Microsoft.CodeAnalysis;
-using Tsinswreng.CsSrcGen.Dict.CodeGenerator.Ctx;
+using Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx;
 using Tsinswreng.CsSrcGen.Tools;
 namespace Tsinswreng.CsSrcGen.DictMapper.CodeGenerator;
 

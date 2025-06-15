@@ -6,12 +6,18 @@ using Tsinswreng.CsSrcGen.DictMapper;
 
 namespace NsA{
 	public class ClassA{
+		public class InnerClassC{
+
+		}
 
 	}
 }
 
 namespace NsB{
 	public class ClassB{
+
+	}
+	public class ClassD{
 
 	}
 }
@@ -26,19 +32,17 @@ public partial class UserDictCtx{
 }//~Ns
 
 
-//example
+//example (deprecated)
 #if false
 #region Generated
 // in UserDictCtxNs.DictCtx-NsA.ClassA.cs
 
-namespace UserDictCtxNs{
-	namespace NsA{
-		public class DictMapper :IDictMapperForOneType{
-			protected static DictMapper? _Inst = null;
-			public static DictMapper Inst => _Inst??= new DictMapper();
+namespace UserDictCtxNs._.NsA.ClassA{
+	public class DictMapper :IDictMapperForOneType{
+		protected static DictMapper? _Inst = null;
+		public static DictMapper Inst => _Inst??= new DictMapper();
 
-			//...
-		}
+		//...
 	}
 }
 

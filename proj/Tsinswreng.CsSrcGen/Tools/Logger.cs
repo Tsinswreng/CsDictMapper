@@ -8,7 +8,17 @@ public class Logger{
 		File.AppendAllText(Path, s+"\n");
 	}
 
-	public static void Write(string Path, string s){
-		File.WriteAllText("./Tsinswreng.CsSrcGen/"+Path, s);
+	public static nil Write(string Path, string s){
+		File.WriteAllText(Path, s);
+		return NIL;
+	}
+
+	public static nil Debug(string Path, string s){
+		return NIL;
+		var Base = @"E:\_code\CsNgaq\Ngaq.Core\Tsinswreng.CsSrcGen.LogDir";
+		Directory.CreateDirectory(Base);
+		Path = $"{Base}/"+Path;
+		File.WriteAllText(""+Path, s);
+		return NIL;
 	}
 }

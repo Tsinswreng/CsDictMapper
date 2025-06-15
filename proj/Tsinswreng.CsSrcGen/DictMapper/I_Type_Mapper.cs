@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Tsinswreng.CsSrcGen.Dict;
+namespace Tsinswreng.CsSrcGen.DictMapper;
 
 
 public interface IDictMapperForOneType{
