@@ -8,10 +8,15 @@ public class ConstName{
 
 	public str ToDict = nameof(ToDict);
 	public str ToDictT = nameof(ToDictT);
+	public str ToDictShallow = nameof(ToDictShallow);
+
 	public str GetTypeDict = nameof(GetTypeDict);
 	public str GetTypeDictT = nameof(GetTypeDictT);
+	public str GetTypeDictShallow = nameof(GetTypeDictShallow);
+
 	public str Assign = nameof(Assign);
 	public str AssignT = nameof(AssignT);
+	public str AssignShallow = nameof(AssignShallow);
 	public str TypeFnSaver = nameof(TypeFnSaver);
 	public str FnToDict = nameof(FnToDict);
 	public str FnAssign = nameof(FnAssign);

@@ -87,18 +87,18 @@ var R = $$"""
 
 	public virtual Type {{N.TargetType}} {get;} = typeof({{CodeTool.ResolveFullTypeFitsTypeof(CtxTargetType.TypeSymbol)}});
 
-	public virtual {{S.IDictionary}}<string, object?> {{N.ToDict}}(object obj){
+	public virtual {{S.IDictionary}}<string, object?> {{N.ToDictShallow}}(object obj){
 		if(obj is not {{ResolvedType}} o){
 			throw new ArgumentException("obj is not of type {{ResolvedType}}");
 		}
 		return Static.{{N.ToDict}}(o);
 	}
 
-	public virtual {{S.IDictionary}}<string, {{S.Type}}> {{N.GetTypeDict}}(){
+	public virtual {{S.IDictionary}}<string, {{S.Type}}> {{N.GetTypeDictShallow}}(){
 		return Static.{{N.GetTypeDict}}(null);
 	}
 
-	public virtual object {{N.Assign}}(object obj, {{S.IDictionary}}<string, object?> dict){
+	public virtual object {{N.AssignShallow}}(object obj, {{S.IDictionary}}<string, object?> dict){
 		if(obj is not {{ResolvedType}} o){
 			throw new ArgumentException("obj is not of type {{ResolvedType}}");
 		}
