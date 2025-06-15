@@ -43,6 +43,8 @@ public class CtxTargetType{
 		if(_Inited){return this;}
 		var typeSymbol = TypeSymbol;
 		// ;//需有父類成員
+		// Logger.Append("--");//t
+		// Logger.Append(typeSymbol+"");
 		PublicProps = Tools.CodeTool.GetPropsWithParent(typeSymbol);
 		_Inited = true;
 		return this;

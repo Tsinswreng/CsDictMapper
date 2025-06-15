@@ -45,10 +45,13 @@ public class CtxDictCtx{
 		// }
 		DictTypeAttrParams = GenDictCtx.GetDictTypeAttrParams(DictTypeClassSymbol!);
 		foreach(var DictTypeAttrParam in DictTypeAttrParams){
+			var d = DictTypeAttrParam;
+			//.Logger.Append(d.TargetTypeSymbol+"-"+d.Recursive);//t
 			var CtxTargetType = new CtxTargetType(
 				CtxDictCtx:this
 				,DictTypeAttrParam: DictTypeAttrParam
 			).Init();
+			CtxTargetTypes.Add(CtxTargetType);
 		}
 		_Inited = true;
 		return this;
