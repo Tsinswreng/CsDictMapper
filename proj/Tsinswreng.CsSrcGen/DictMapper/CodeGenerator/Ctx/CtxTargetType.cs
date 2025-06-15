@@ -11,26 +11,37 @@ namespace Tsinswreng.CsSrcGen.DictMapper.CodeGenerator.Ctx;
 
 public class CtxTargetType{
 
-	public CtxDictCtx Ctx_DictCtx{get;set;}
-	public INamedTypeSymbol TypeSymbol{get;set;}
+	public CtxDictCtx CtxDictCtx{get;set;}
+
+	public INamedTypeSymbol TypeSymbol{
+		get{
+			return DictTypeAttrParam.TargetTypeSymbol;
+		}
+		set{
+			DictTypeAttrParam.TargetTypeSymbol = value;
+		}
+	}
+	public IParamDictType DictTypeAttrParam{get;set;}
+	// public CtxTargetType(
+	// 	CtxDictCtx CtxDictCtx
+	// 	,INamedTypeSymbol TypeSymbol
+	// ){
+	// 	this.Ctx_DictCtx = CtxDictCtx;
+	// 	this.TypeSymbol = TypeSymbol;
+	// }
+
 	public CtxTargetType(
-		CtxDictCtx Ctx_DictCtx
-		,INamedTypeSymbol TypeSymbol
+		CtxDictCtx CtxDictCtx
+		,IParamDictType DictTypeAttrParam
 	){
-		this.Ctx_DictCtx = Ctx_DictCtx;
-		this.TypeSymbol = TypeSymbol;
+		this.CtxDictCtx = CtxDictCtx;
+		this.DictTypeAttrParam = DictTypeAttrParam;
 	}
 
 	bool _Inited = false;
 	public CtxTargetType Init(){
 		if(_Inited){return this;}
 		var typeSymbol = TypeSymbol;
-		// PublicProps = typeSymbol.GetMembers()
-		// 	.OfType<IPropertySymbol>()
-		// 	.Where(
-		// 		p => p.DeclaredAccessibility == Accessibility.Public
-		// 		&& !p.IsStatic
-		// 	)
 		// ;//需有父類成員
 		PublicProps = Tools.CodeTool.GetPropsWithParent(typeSymbol);
 		_Inited = true;

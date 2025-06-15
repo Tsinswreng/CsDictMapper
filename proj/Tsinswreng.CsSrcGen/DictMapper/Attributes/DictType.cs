@@ -10,9 +10,12 @@ using System;
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
 public class DictType:Attribute{
 	public Type TargetType { get; }
+	[Obsolete("Unsupport yet")]
+	public bool Recursive { get; set; } = false;
 
-	public DictType(Type targetType){
-		TargetType = targetType;
+	public DictType(Type TargetType, bool Recursive=false){
+		this.TargetType = TargetType;
+		this.Recursive = Recursive;
 	}
 }
 

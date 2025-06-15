@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Tsinswreng.CsSrcGen.DictMapper.Attributes;
@@ -33,13 +35,20 @@ public class CtxDictCtx{
 			return null;
 		}
 		DictCtxNsStr = DictTypeClassSymbol?.ContainingNamespace?.ToDisplayString()??"";
-		TargetTypes = GenDictCtx.YieldTypeWithDictTypeAttr(DictTypeClassSymbol!);
-		foreach (var TargetType in TargetTypes) {
-			var Ctx_TargetType = new CtxTargetType(
-				Ctx_DictCtx:this
-				,TypeSymbol:TargetType
+		// TargetTypes = GenDictCtx.YieldTypeWithDictTypeAttr(DictTypeClassSymbol!);
+		// foreach (var TargetType in TargetTypes) {
+		// 	var CtxTargetType = new CtxTargetType(
+		// 		Ctx_DictCtx:this
+		// 		,TypeSymbol:TargetType
+		// 	).Init();
+		// 	CtxTargetTypes.Add(CtxTargetType);
+		// }
+		DictTypeAttrParams = GenDictCtx.GetDictTypeAttrParams(DictTypeClassSymbol!);
+		foreach(var DictTypeAttrParam in DictTypeAttrParams){
+			var CtxTargetType = new CtxTargetType(
+				CtxDictCtx:this
+				,DictTypeAttrParam: DictTypeAttrParam
 			).Init();
-			CtxTargetTypes.Add(Ctx_TargetType);
 		}
 		_Inited = true;
 		return this;
@@ -48,7 +57,9 @@ public class CtxDictCtx{
 	public SemanticModel SemanticModel{get;set;} = null!;
 	public INamedTypeSymbol? DictTypeClassSymbol{get;set;} = null!;
 	public str DictCtxNsStr{get;set;} = "";
+	[Obsolete("此ʹ參數ˋ不全。改用DictTypeAttrParams")]
 	public IEnumerable<INamedTypeSymbol> TargetTypes{get;set;} = null!;
+	public IEnumerable<IParamDictType> DictTypeAttrParams{get;set;}
 	public IList<CtxTargetType> CtxTargetTypes{get;set;} = new List<CtxTargetType>();
 	[Obsolete]
 	public IList<str> TypesElseIfs{get;set;} = new List<str>();
@@ -233,8 +244,32 @@ public partial class {{ClsName}}: {{N.NsDictMapper}}.{{N.DictMapper}} {
 /// </summary>
 /// <param name="classSymbol"></param>
 /// <returns></returns>
+[Obsolete("改用GetDictTypeAttrParam 緣此不支持Recursive參數")]
 	public static IEnumerable<INamedTypeSymbol> YieldTypeWithDictTypeAttr(INamedTypeSymbol classSymbol) {
 		return CodeTool.YieldTypeWithAttr(classSymbol, nameof(DictType));
+	}
+
+	public static IEnumerable<IParamDictType> GetDictTypeAttrParams(INamedTypeSymbol classSymbol){
+		var literalAttrName = nameof(DictType);
+		var attributes = classSymbol.GetAttributes()
+			.Where(attr => attr.AttributeClass?.Name == literalAttrName);
+
+		foreach (var attr in attributes){
+			// 先取构造函数第一个参数 TargetType（必有）
+			var typeArg = attr.ConstructorArguments.FirstOrDefault();
+
+			INamedTypeSymbol? targetType = typeArg.Value as INamedTypeSymbol;
+			if (targetType == null){continue;}
+			// 默认递归参数为 false
+			bool recursive = false;
+			// NamedArguments 里找是否传入了 Recursive 参数
+			var recursiveArg = attr.NamedArguments
+				.FirstOrDefault(kv => kv.Key == nameof(ParamDictType.Recursive));
+			if (!recursiveArg.Equals(default(KeyValuePair<string, TypedConstant>))){
+				recursive = recursiveArg.Value.Value is bool b && b;
+			}
+			yield return new ParamDictType(targetType, recursive);
+		}//~foreach (var attr in attributes)
 	}
 
 	public str MkFile(CtxTargetType CtxTargetType){

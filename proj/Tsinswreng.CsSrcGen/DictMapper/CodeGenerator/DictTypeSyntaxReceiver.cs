@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Tsinswreng.CsSrcGen.Dict.Attributes;
+using Tsinswreng.CsSrcGen.DictMapper.Attributes;
 
 namespace Tsinswreng.CsSrcGen.DictMapper.CodeGenerator;
 // 语法接收器，用于定位所有包含DictType特性的类(一般只有一個)

@@ -58,11 +58,29 @@ public static class CodeTool{
 		// 解析特性中的 Type 参数
 		foreach (var attr in attributes) {
 			var typeArg = attr.ConstructorArguments.FirstOrDefault();
-			if (typeArg.Value is INamedTypeSymbol targetType) {
-				yield return targetType;
+			if (typeArg.Value is INamedTypeSymbol TargetType) {
+				yield return TargetType;
 			}
 		}
 	}
+
+
+	// public static IEnumerable<INamedTypeSymbol> GetAttrArgs(
+	// 	INamedTypeSymbol classSymbol
+	// 	,str LiteralAttrName
+	// ) {
+	// 	// 提取所有 DictType 特性
+	// 	var attributes = classSymbol.GetAttributes()
+	// 		.Where(attr => attr.AttributeClass?.Name == LiteralAttrName);
+
+	// 	// 解析特性中的 Type 参数
+	// 	foreach (var attr in attributes) {
+	// 		var typeArg = attr.ConstructorArguments.FirstOrDefault();
+	// 		if (typeArg.Value is INamedTypeSymbol TargetType) {
+	// 			yield return TargetType;
+	// 		}
+	// 	}
+	// }
 
 	public static IEnumerable<IPropertySymbol> GetPropsWithParent(
 		INamedTypeSymbol classSymbol
