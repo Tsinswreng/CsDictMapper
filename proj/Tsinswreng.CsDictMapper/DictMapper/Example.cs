@@ -1,4 +1,4 @@
-using Tsinswreng.CsDictMapper.Dict;
+using Tsinswreng.CsDictMapper.DictMapper;
 
 namespace UserDictCtxNs{
 using Tsinswreng.CsDictMapper.DictMapper.Attributes;
