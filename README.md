@@ -32,9 +32,9 @@ public partial class AppDictMapper{
 ```cs
 using Tsinswreng.CsDictMapper;
 // object to dictionary:
-var person = new Person{Age=25, Name="Tsinswreng"};
+var person = new Person{Age=22, Name="Tsinswreng"};
 var dict = AppDictMapper.Inst.ToDictShallowT(person);
-// the dict will be {"Age":25, "Name":"Tsinswreng"}
+// the dict will be like {"Age":22, "Name":"Tsinswreng"}
 
 // assign the dictionary to object:
 var person2 = new Person();
@@ -48,12 +48,12 @@ AppDictMapper.Inst.AssignShallowT(person2, dict);
 + In your .csproj file:
 ```xml
 <ItemGroup>
-	<!-- reference the source generator -->
+	<!-- reference the source generator assembly -->
 	<ProjectReference Include="../Tsinswreng.CsDictMapper/proj/Tsinswreng.CsDictMapper.SrcGen/Tsinswreng.CsDictMapper.SrcGen.csproj"
 		OutputItemType="Analyzer" ReferenceOutputAssembly="false"
 	/>
 
-	<!-- reference the API, including Attributes, interfaces etc. -->
+	<!-- reference the API assembly, including Attributes, interfaces etc. -->
 	<ProjectReference Include="../Tsinswreng.CsDictMapper/proj/Tsinswreng.CsDictMapper/Tsinswreng.CsDictMapper.csproj" />
 
 </ItemGroup>
@@ -61,3 +61,33 @@ AppDictMapper.Inst.AssignShallowT(person2, dict);
 
 # Documentation
 
+The class attached `[DictType(typeof(T))]` will automatically implement the interface `IDictMapperShallow`
+
+
+```cs
+namespace Tsinswreng.CsDictMapper;
+
+public interface IDictMapperShallow{
+	public IDictionary<Type, IDictMapperForOneType> Type_Mapper{get;set;}
+	public IDictionary<str, object?> ToDictShallowT<T>(T Obj);
+	public IDictionary<str, object?> ToDictShallow(Type Type, object? Obj);
+
+	public IDictionary<str, Type> GetTypeDictShallowT<T>();
+	public IDictionary<str, Type> GetTypeDictShallow(Type Type);
+
+	public T AssignShallowT<T> (T obj, IDictionary<str, object?> dict);
+	public object AssignShallow(Type Type, object? obj, IDictionary<str, object?> dict);
+}
+
+
+
+public interface IDictMapperForOneType{
+	public Type TargetType{get;}
+	public IDictionary<str, object?> ToDictShallow(object Obj);
+	public IDictionary<str, Type> GetTypeDictShallow();
+	public object AssignShallow(object Obj, IDictionary<str, object?> Dict);
+
+}
+
+
+```

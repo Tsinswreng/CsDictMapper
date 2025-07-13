@@ -6,9 +6,9 @@ namespace Tsinswreng.CsDictMapper;
 
 public interface IDictMapperForOneType{
 	public Type TargetType{get;}
-	public IDictionary<str, object?> ToDictShallow(object obj);
+	public IDictionary<str, object?> ToDictShallow(object Obj);
 	public IDictionary<str, Type> GetTypeDictShallow();
-	public object AssignShallow(object obj, IDictionary<str, object?> dict);
+	public object AssignShallow(object Obj, IDictionary<str, object?> Dict);
 
 }
 
