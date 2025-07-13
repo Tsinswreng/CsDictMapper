@@ -66,7 +66,7 @@ The class attached `[DictType(typeof(T))]` will automatically implement the inte
 
 ```cs
 namespace Tsinswreng.CsDictMapper;
-
+using str = string;
 public interface IDictMapperShallow{
 	public IDictionary<Type, IDictMapperForOneType> Type_Mapper{get;set;}
 	public IDictionary<str, object?> ToDictShallowT<T>(T Obj);
@@ -75,10 +75,9 @@ public interface IDictMapperShallow{
 	public IDictionary<str, Type> GetTypeDictShallowT<T>();
 	public IDictionary<str, Type> GetTypeDictShallow(Type Type);
 
-	public T AssignShallowT<T> (T obj, IDictionary<str, object?> dict);
-	public object AssignShallow(Type Type, object? obj, IDictionary<str, object?> dict);
+	public T AssignShallowT<T> (T Obj, IDictionary<str, object?> Dict);
+	public object AssignShallow(Type Type, object? Obj, IDictionary<str, object?> Dict);
 }
-
 
 
 public interface IDictMapperForOneType{

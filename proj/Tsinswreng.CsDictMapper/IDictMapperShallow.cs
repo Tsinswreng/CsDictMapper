@@ -10,7 +10,7 @@ public interface IDictMapperShallow{
 	public IDictionary<str, Type> GetTypeDictShallowT<T>();
 	public IDictionary<str, Type> GetTypeDictShallow(Type Type);
 
-	public T AssignShallowT<T> (T obj, IDictionary<str, object?> dict);
-	public object AssignShallow(Type Type, object? obj, IDictionary<str, object?> dict);
+	public T AssignShallowT<T> (T Obj, IDictionary<str, object?> Dict);
+	public object AssignShallow(Type Type, object? Obj, IDictionary<str, object?> Dict);
 }
 
