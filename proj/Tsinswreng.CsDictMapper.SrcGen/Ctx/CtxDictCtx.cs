@@ -60,7 +60,7 @@ public class CtxDictCtx{
 	public str DictCtxNsStr{get;set;} = "";
 	[Obsolete("此ʹ參數ˋ不全。改用DictTypeAttrParams")]
 	public IEnumerable<INamedTypeSymbol> TargetTypes{get;set;} = null!;
-	public IEnumerable<IParamDictType> DictTypeAttrParams{get;set;}
+	public IEnumerable<IParamDictType> DictTypeAttrParams{get;set;}=null!;
 	public IList<CtxTargetType> CtxTargetTypes{get;set;} = new List<CtxTargetType>();
 	[Obsolete]
 	public IList<str> TypesElseIfs{get;set;} = new List<str>();

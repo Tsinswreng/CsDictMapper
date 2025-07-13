@@ -10,11 +10,11 @@ global using u64 = System.UInt64;
 global using f32 = System.Single;
 global using f64 = System.Double;
 global using str = System.String;
-global using nil = Tsinswreng.CsDictMapper.Nil_;
-global using static Tsinswreng.CsDictMapper.Nil_;
+global using nil = object;
+global using static Tsinswreng.CsDictMapper.Nil;
 //#pragma warning restore CS8981
 namespace Tsinswreng.CsDictMapper{
-public class Nil_{
+internal class Nil{
 	public const nil NIL = null!;
 }
 

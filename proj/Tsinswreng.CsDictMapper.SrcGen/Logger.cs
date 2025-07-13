@@ -15,10 +15,10 @@ internal class Logger{
 
 	public static nil Debug(string Path, string s){
 		return NIL;
-		var Base = @"E:\_code\CsNgaq\Ngaq.Core\Tsinswreng.CsDictMapper.LogDir";
-		Directory.CreateDirectory(Base);
-		Path = $"{Base}/"+Path;
-		File.WriteAllText(""+Path, s);
-		return NIL;
+		// var Base = @"E:\_code\CsNgaq\Ngaq.Core\Tsinswreng.CsDictMapper.LogDir";
+		// Directory.CreateDirectory(Base);
+		// Path = $"{Base}/"+Path;
+		// File.WriteAllText(""+Path, s);
+		// return NIL;
 	}
 }
