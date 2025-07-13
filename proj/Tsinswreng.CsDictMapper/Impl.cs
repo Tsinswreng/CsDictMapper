@@ -2,7 +2,7 @@
 using System;
 
 [AttributeUsage(AttributeTargets.All)]
-public class Impl : Attribute{
+internal class Impl : Attribute{
 	public Type? IF { get; }
 	public Type[]? Types{get;set;}
 	public Impl(Type? IF = null) {
