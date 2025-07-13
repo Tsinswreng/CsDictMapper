@@ -3,7 +3,7 @@ Convert between `IDictionary<string,object?>` and C# object.
 
 AOT friendly, Free of reflection.
 
-**⚠This project has no release version yet and everything may change. If you want to use it, we recommand you to clone the code and reference the source code directly.**
+**⚠️This project has no release version yet and everything may change. If you want to use it, we recommand you to clone the code and reference the source code directly.⚠️**
 
 # Usage
 
