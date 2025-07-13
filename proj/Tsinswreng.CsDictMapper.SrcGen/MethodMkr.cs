@@ -5,11 +5,11 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Tsinswreng.CsDictMapper.Tools;
 
-namespace Tsinswreng.CsDictMapper.DictMapper.CodeGenerator;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 
 
 public class MethodMkr{
-	public Ctx_DictGen Ctx{get;set;}
+	public CtxDictGen Ctx{get;set;}
 	public IEnumerable<IPropertySymbol> PublicProps{get;set;} = null!;
 	public IList<str> MethodCodes{get;set;} = new List<str>();
 
@@ -19,12 +19,12 @@ public class MethodMkr{
 	public str TargetNamespaceStr{get;set;} = "";
 	public str DictCtxNamespaceStr{get;set;} = "";
 
-	public MethodMkr(Ctx_DictGen Ctx){
+	public MethodMkr(CtxDictGen Ctx){
 		this.Ctx = Ctx;
-		this.Init();
+		Init();
 	}
 
-	public static str MkFileCode(Ctx_DictGen Ctx){
+	public static str MkFileCode(CtxDictGen Ctx){
 		var Mkr = new MethodMkr(Ctx);
 		return Mkr.MkFile();
 	}

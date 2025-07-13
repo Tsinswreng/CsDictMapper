@@ -1,6 +1,6 @@
 using System;
 
-namespace Tsinswreng.CsDictMapper.DictMapper.CodeGenerator;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 
 public class ConstName{
 	protected static ConstName? _Inst = null;
@@ -21,7 +21,8 @@ public class ConstName{
 	public str FnToDict = nameof(FnToDict);
 	public str FnAssign = nameof(FnAssign);
 	public str FnGetTypeDict = nameof(FnGetTypeDict);
-	public str NsDictMapper = nameof(Tsinswreng)+"."+nameof(CsDictMapper)+"."+nameof(DictMapper);
+	//public str NsDictMapper = nameof(Tsinswreng)+"."+nameof(CsDictMapper)+"."+nameof(DictMapper);
+	public str NsDictMapper = nameof(Tsinswreng)+"."+nameof(CsDictMapper);
 	public str IDictMapperForOneType = nameof(IDictMapperForOneType);
 	public str TargetType = nameof(TargetType);
 	public str Type_Mapper = nameof(Type_Mapper);

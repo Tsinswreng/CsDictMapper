@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Tsinswreng.CsDictMapper.DictMapper.Attributes;
 using Tsinswreng.CsDictMapper.Tools;
 
-namespace Tsinswreng.CsDictMapper.DictMapper.CodeGenerator.Ctx;
+namespace Tsinswreng.CsDictMapper.SrcGen.Ctx;
 
 public class CtxDictCtx{
 
@@ -78,7 +76,7 @@ public class GenDictCtx{
 	public CtxDictCtx CtxDictCtx{get;set;}
 
 	public GenDictCtx(CtxDictCtx Ctx_DictCtx){
-		this.CtxDictCtx = Ctx_DictCtx;
+		CtxDictCtx = Ctx_DictCtx;
 	}
 
 // 	[Obsolete]
@@ -294,7 +292,7 @@ public partial class {{ClsName}}: {{N.NsDictMapper}}.{{N.DictMapper}} {
 		str FileName = "";
 		var NoWarn = "#pragma warning disable CS8618, CS8600, CS8601, CS8604, CS8605\n";
 		try{
-			var DictCtxName = (CtxDictCtx.DictTypeClassSymbol?.ToString()??"");
+			var DictCtxName = CtxDictCtx.DictTypeClassSymbol?.ToString()??"";
 			var i = 0;
 			foreach(var CtxTargetType in CtxDictCtx.CtxTargetTypes){
 				FileCode = MkFile(CtxTargetType);
@@ -311,7 +309,7 @@ public partial class {{ClsName}}: {{N.NsDictMapper}}.{{N.DictMapper}} {
 			AddSrc(CtxDictCtx.ExeCtx, DictCtxName+"-.cs", NoWarn+Code_Main);
 			return NIL;
 		}
-		catch (System.Exception e){
+		catch (Exception e){
 			// Logger.Append(FileName);
 			// Logger.Append(e.ToString());
 			//Logger.Append(FileCode);

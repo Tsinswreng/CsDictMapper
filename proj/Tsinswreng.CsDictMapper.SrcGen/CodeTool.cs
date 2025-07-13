@@ -8,7 +8,6 @@ namespace Tsinswreng.CsDictMapper.Tools;
 
 public static class CodeTool{
 
-
 	public static str CombineNsEtSymbol(INamespaceSymbol NsSymbol, str Symbol){
 		if(NsSymbol.IsGlobalNamespace){
 			return Symbol;

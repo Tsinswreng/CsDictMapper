@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Tsinswreng.CsDictMapper.Tools;
 
-namespace Tsinswreng.CsDictMapper.DictMapper.CodeGenerator.Ctx;
+namespace Tsinswreng.CsDictMapper.SrcGen.Ctx;
 
 
 public class CtxTargetType{
@@ -45,7 +45,7 @@ public class CtxTargetType{
 		// ;//需有父類成員
 		// Logger.Append("--");//t
 		// Logger.Append(typeSymbol+"");
-		PublicProps = Tools.CodeTool.GetPropsWithParent(typeSymbol);
+		PublicProps = CodeTool.GetPropsWithParent(typeSymbol);
 		_Inited = true;
 		return this;
 	}
@@ -65,7 +65,7 @@ public class GenTargetType{
 	}
 
 	public GenTargetType Init(CtxTargetType Ctx_TargetType){
-		this.CtxTargetType = Ctx_TargetType;
+		CtxTargetType = Ctx_TargetType;
 		Ctx_TargetType.Init();
 		return this;
 	}

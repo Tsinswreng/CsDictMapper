@@ -1,9 +1,7 @@
 using System.Reflection;
 using Microsoft.CodeAnalysis;
-using Tsinswreng.CsDictMapper.DictMapper.CodeGenerator.Ctx;
-using Tsinswreng.CsDictMapper.Tools;
-namespace Tsinswreng.CsDictMapper.DictMapper.CodeGenerator;
-
+using Tsinswreng.CsDictMapper.SrcGen.Ctx;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 
 [Generator]
 public class DictGen: ISourceGenerator{

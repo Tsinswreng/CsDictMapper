@@ -1,4 +1,4 @@
-namespace Tsinswreng.CsDictMapper.DictMapper.Attributes{
+namespace Tsinswreng.CsDictMapper;
 
 using System;
 
@@ -10,13 +10,13 @@ using System;
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
 public class DictType:Attribute{
 	public Type TargetType { get; }
-	[Obsolete("Unsupport yet")]
-	public bool Recursive { get; set; } = false;
+	// [Obsolete("Unsupport yet")]
+	// public bool Recursive { get; set; } = false;
 
-	public DictType(Type TargetType, bool Recursive=false){
+	public DictType(Type TargetType/* , bool Recursive=false */){
 		this.TargetType = TargetType;
-		this.Recursive = Recursive;
+		//this.Recursive = Recursive;
 	}
 }
 
-}//~ns
+

@@ -1,5 +1,5 @@
 #pragma warning disable RS1035
-namespace Tsinswreng.CsDictMapper.Tools;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 using System.IO;
 
 internal class Logger{

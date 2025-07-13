@@ -1,20 +1,14 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using Tsinswreng.CsDictMapper.Tools;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 
-namespace Tsinswreng.CsDictMapper.DictMapper.CodeGenerator;
-
-public class Ctx_DictGen{
+public class CtxDictGen{
 	/// <summary>
 	/// 包含[DictType(typeof(TargetType))]特性的类(DictCtx)
 	/// </summary>
 	#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-	public Ctx_DictGen(){
+	public CtxDictGen(){
 
 	}
 	public ClassDeclarationSyntax DictCtxClass { get;set; }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-namespace Tsinswreng.CsDictMapper.DictMapper;
+namespace Tsinswreng.CsDictMapper;
 
 public interface IDictMapperShallow{
 	public IDictionary<Type, IDictMapperForOneType> Type_Mapper{get;set;}

@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Tsinswreng.CsDictMapper.DictMapper;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 
 public interface IParamDictType{
 	public INamedTypeSymbol TargetTypeSymbol{get;set;}
@@ -10,7 +10,7 @@ public interface IParamDictType{
 
 public class ParamDictType: IParamDictType{
 	public ParamDictType(INamedTypeSymbol TargetType, bool Recursive=false){
-		this.TargetTypeSymbol = TargetType;
+		TargetTypeSymbol = TargetType;
 		this.Recursive = Recursive;
 	}
 	public INamedTypeSymbol TargetTypeSymbol{get;set;}

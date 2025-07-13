@@ -1,8 +1,8 @@
-using Tsinswreng.CsDictMapper.DictMapper;
+using Tsinswreng.CsDictMapper;
 
 namespace UserDictCtxNs{
-using Tsinswreng.CsDictMapper.DictMapper.Attributes;
-using Tsinswreng.CsDictMapper.DictMapper;
+
+
 
 namespace NsA{
 	public class ClassA{
