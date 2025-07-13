@@ -13,9 +13,8 @@
 		<EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
 		<LangVersion>latest</LangVersion>
 
-
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+		<!-- <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath> -->
 	</PropertyGroup>
 
 <ItemGroup>
