@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Tsinswreng.CsDictMapper.DictMapper;
-
 namespace Tsinswreng.CsDictMapper.DictMapper;
 
 public interface IDictMapperShallow{
@@ -33,35 +30,39 @@ public interface IDictMapperDeep{
 public class DictMapper
 	:IDictMapperShallow
 {
-	public virtual IDictionary<Type, IDictMapperForOneType> Type_Mapper{get;set;}
+
+	public IDictionary<Type, IDictMapperForOneType> Type_Mapper { get; set; }
 		= new Dictionary<Type, IDictMapperForOneType>();
 
-	public virtual IDictionary<str, object?> ToDictShallow(Type Type, object? obj){
-		if(!Type_Mapper.TryGetValue(Type, out var Mapper)){
+	[Impl]
+	public IDictionary<str, object?> ToDictShallow(Type Type, object? obj) {
+		if (!Type_Mapper.TryGetValue(Type, out var Mapper)) {
 			throw new ArgumentException($"No mapper found for type {Type}");
 		}
-		if(obj == null){
+		if (obj == null) {
 			throw new ArgumentNullException("obj is null");
 		}
 		return Mapper.ToDictShallow(obj);
 	}
 
-	public virtual IDictionary<str, object?> ToDictShallowT<T>(T obj){
+[Impl]
+	public IDictionary<str, object?> ToDictShallowT<T>(T obj) {
 		return ToDictShallow(typeof(T), obj);
 	}
-
-	public virtual IDictionary<str, Type> GetTypeDictShallow(Type Type){
+[Impl]
+	public IDictionary<str, Type> GetTypeDictShallow(Type Type){
 		if(!Type_Mapper.TryGetValue(Type, out var Mapper)){
 			throw new ArgumentException($"No mapper found for type {Type}");
 		}
 		return Mapper.GetTypeDictShallow();
 	}
-	public virtual IDictionary<str, Type> GetTypeDictShallowT<T>(){
+[Impl]
+	public IDictionary<str, Type> GetTypeDictShallowT<T>() {
 		return GetTypeDictShallow(typeof(T));
 	}
 
-
-	public virtual object AssignShallow(Type Type, object? obj, IDictionary<str, object?> dict){
+[Impl]
+	public object AssignShallow(Type Type, object? obj, IDictionary<str, object?> dict){
 		if(!Type_Mapper.TryGetValue(Type, out var Mapper)){
 			throw new ArgumentException($"No mapper found for type {Type}");
 		}
@@ -70,12 +71,12 @@ public class DictMapper
 		}
 		return Mapper.AssignShallow(obj, dict);
 	}
-
-	public virtual T AssignShallowT<T> (T obj, IDictionary<str, object?> dict){
+[Impl]
+	public T AssignShallowT<T> (T obj, IDictionary<str, object?> dict){
 		return (T)AssignShallow(typeof(T), obj, dict);
 	}
 
-	// public virtual IDictionary<str, object?> ToDictDeep(Type Type, object? obj){
+	// public IDictionary<str, object?> ToDictDeep(Type Type, object? obj){
 	// 	if(!Type_Mapper.TryGetValue(Type, out var Mapper)){
 	// 		throw new ArgumentException($"No mapper found for type {Type}");
 	// 	}

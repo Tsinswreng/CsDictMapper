@@ -2,7 +2,7 @@
 namespace Tsinswreng.CsDictMapper.Tools;
 using System.IO;
 
-public class Logger{
+internal class Logger{
 	public static string Path = "./Tsinswreng.CsDictMapper.log.txt";
 	public static void Append(string s){
 		File.AppendAllText(Path, s+"\n");
