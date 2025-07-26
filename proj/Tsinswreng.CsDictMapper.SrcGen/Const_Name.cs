@@ -2,7 +2,7 @@ using System;
 
 namespace Tsinswreng.CsDictMapper.SrcGen;
 
-public class ConstName{
+public  partial class ConstName{
 	protected static ConstName? _Inst = null;
 	public static ConstName Inst => _Inst??= new ConstName();
 
@@ -32,7 +32,7 @@ public class ConstName{
 
 }
 
-public class SymbolWithNamespace{
+public  partial class SymbolWithNamespace{
 	protected static SymbolWithNamespace? _Inst = null;
 	public static SymbolWithNamespace Inst => _Inst??= new SymbolWithNamespace();
 

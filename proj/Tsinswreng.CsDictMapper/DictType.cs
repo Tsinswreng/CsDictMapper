@@ -8,7 +8,7 @@ using System;
 /// 如引用時用[DictType(...)]則斯類ʹ名則須潙DictType、叵作DictTypeAttribute
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-public class DictType:Attribute{
+public  partial class DictType:Attribute{
 	public Type TargetType { get; }
 	// [Obsolete("Unsupport yet")]
 	// public bool Recursive { get; set; } = false;

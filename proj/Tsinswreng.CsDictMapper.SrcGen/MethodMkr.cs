@@ -8,7 +8,7 @@ using Tsinswreng.CsDictMapper.Tools;
 namespace Tsinswreng.CsDictMapper.SrcGen;
 
 
-public class MethodMkr{
+public  partial class MethodMkr{
 	public CtxDictGen Ctx{get;set;}
 	public IEnumerable<IPropertySymbol> PublicProps{get;set;} = null!;
 	public IList<str> MethodCodes{get;set;} = new List<str>();

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace Tsinswreng.CsDictMapper;
 
-public class DictMapper
+public  partial class DictMapper
 	:IDictMapperShallow
 {
 
@@ -36,7 +36,7 @@ public class DictMapper
 		return GetTypeDictShallow(typeof(T));
 	}
 
-[Impl]
+	[Impl]
 	public object AssignShallow(Type Type, object? obj, IDictionary<str, object?> dict){
 		if(!Type_Mapper.TryGetValue(Type, out var Mapper)){
 			throw new ArgumentException($"No mapper found for type {Type}");
@@ -46,7 +46,8 @@ public class DictMapper
 		}
 		return Mapper.AssignShallow(obj, dict);
 	}
-[Impl]
+
+	[Impl]
 	public T AssignShallowT<T> (T obj, IDictionary<str, object?> dict){
 		return (T)AssignShallow(typeof(T), obj, dict);
 	}

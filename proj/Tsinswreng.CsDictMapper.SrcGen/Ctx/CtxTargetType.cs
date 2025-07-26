@@ -9,7 +9,7 @@ using Tsinswreng.CsDictMapper.Tools;
 namespace Tsinswreng.CsDictMapper.SrcGen.Ctx;
 
 
-public class CtxTargetType{
+public  partial class CtxTargetType{
 
 	public CtxDictCtx CtxDictCtx{get;set;}
 
@@ -55,7 +55,7 @@ public class CtxTargetType{
 }
 
 
-public class GenTargetType{
+public  partial class GenTargetType{
 
 	public CtxTargetType CtxTargetType{get;set;}
 

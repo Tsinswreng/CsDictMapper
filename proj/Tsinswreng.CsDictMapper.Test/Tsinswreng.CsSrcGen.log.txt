@@ -8,7 +8,7 @@ Tsinswreng.CsDictMapper.LogDir/Root.UserDictCtx-Root.NsA.ClassA.cs
 #pragma warning disable CS8618, CS8600, CS8601, CS8604, CS8605
 namespace Root {
 namespace Root.NsA {
-public class UserDictCtx : Tsinswreng.CsDictMapper.Dict.IDictForOneType{
+public  partial class UserDictCtx : Tsinswreng.CsDictMapper.Dict.IDictForOneType{
 	protected static UserDictCtx? _Inst = null;
 	public static UserDictCtx Inst => _Inst??= new UserDictCtx();
 
@@ -33,7 +33,7 @@ public class UserDictCtx : Tsinswreng.CsDictMapper.Dict.IDictForOneType{
 		return Static.Assign(o, dict);
 	}
 
-	public class Static{
+	public  partial class Static{
 				public static System.Collections.Generic.IDictionary<string, System.Type> GetTypeDict(Root.NsA.ClassA? obj){//只蔿函數褈載、實非需傳此參數
 			return new System.Collections.Generic.Dictionary<string, System.Type>{
 

@@ -7,7 +7,7 @@
 
 // namespace Tsinswreng.CsDictMapper.Ctor.CodeGen;
 
-// public class CtxCtor{
+// public  partial class CtxCtor{
 
 // 	/// <summary>
 // 	/// 包含[Ctor]特性的类(DictCtx)
@@ -55,7 +55,7 @@
 // }
 
 
-// public class GenDictCtx{
+// public  partial class GenDictCtx{
 
 // 	/// <summary>
 // 	///

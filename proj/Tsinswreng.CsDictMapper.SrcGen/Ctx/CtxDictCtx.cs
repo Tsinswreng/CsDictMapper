@@ -7,7 +7,7 @@ using Tsinswreng.CsDictMapper.Tools;
 
 namespace Tsinswreng.CsDictMapper.SrcGen.Ctx;
 
-public class CtxDictCtx{
+public  partial class CtxDictCtx{
 
 	/// <summary>
 	/// 包含[DictType(typeof(TargetType))]特性的类(DictCtx)
@@ -68,7 +68,7 @@ public class CtxDictCtx{
 }
 
 
-public class GenDictCtx{
+public  partial class GenDictCtx{
 
 	/// <summary>
 	///

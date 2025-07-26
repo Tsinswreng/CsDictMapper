@@ -8,7 +8,7 @@ public interface IParamDictType{
 }
 
 
-public class ParamDictType: IParamDictType{
+public  partial class ParamDictType: IParamDictType{
 	public ParamDictType(INamedTypeSymbol TargetType, bool Recursive=false){
 		TargetTypeSymbol = TargetType;
 		this.Recursive = Recursive;

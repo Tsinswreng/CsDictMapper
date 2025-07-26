@@ -14,7 +14,7 @@ using Tsinswreng.CsDictMapper;
 
 namespace MyProjectNamespace; // don't put things in global namespace otherwise it may not work
 
-public class Person{
+public  partial class Person{
 	public int Age{get;set;}
 	public string Name {get;set;}
 }

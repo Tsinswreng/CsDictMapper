@@ -12,7 +12,7 @@ using System;
 	,AllowMultiple = true
 	,Inherited = false
 )]
-public class Ctor:Attribute{
+public  partial class Ctor:Attribute{
 
 	public str AppendedCode = "";
 

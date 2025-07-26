@@ -9,13 +9,13 @@ namespace Root{
 
 
 namespace NsA{
-	public class ClassA{
+	public  partial class ClassA{
 		public int Int{get;set;} = 1;
 	}
 }
 
 namespace NsB{
-	public class ClassB{
+	public  partial class ClassB{
 		public string String{get;set;} = "String";
 	}
 }

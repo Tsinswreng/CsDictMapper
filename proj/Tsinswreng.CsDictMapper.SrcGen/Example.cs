@@ -5,8 +5,8 @@ namespace UserDictCtxNs{
 
 
 namespace NsA{
-	public class ClassA{
-		public class InnerClassC{
+	public  partial class ClassA{
+		public  partial class InnerClassC{
 
 		}
 
@@ -14,10 +14,10 @@ namespace NsA{
 }
 
 namespace NsB{
-	public class ClassB{
+	public  partial class ClassB{
 
 	}
-	public class ClassD{
+	public  partial class ClassD{
 
 	}
 }
@@ -38,7 +38,7 @@ public partial class UserDictCtx{
 // in UserDictCtxNs.DictCtx-NsA.ClassA.cs
 
 namespace UserDictCtxNs._.NsA.ClassA{
-	public class DictMapper :IDictMapperForOneType{
+	public  partial class DictMapper :IDictMapperForOneType{
 		protected static DictMapper? _Inst = null;
 		public static DictMapper Inst => _Inst??= new DictMapper();
 
@@ -50,7 +50,7 @@ namespace UserDictCtxNs._.NsA.ClassA{
 
 namespace UserDictCtxNs{
 	namespace NsB{
-		public class DictMapper :IDictMapperForOneType{
+		public  partial class DictMapper :IDictMapperForOneType{
 			protected static DictMapper? _Inst = null;
 			public static DictMapper Inst => _Inst??= new DictMapper();
 			//...

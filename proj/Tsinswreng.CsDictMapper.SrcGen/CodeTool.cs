@@ -43,7 +43,7 @@ public static class CodeTool{
 /// <param name="classSymbol"></param>
 /// <param name="LiteralAttrName">
 /// !須同於名芝實際用旹者洏非定義Attr旹者
-/// 如[Obsolete]public class MyClass{}、則LiteralAttrName當傳入 "Obsolete"洏非"ObsoleteAttribute"、否則取不到
+/// 如[Obsolete]public  partial class MyClass{}、則LiteralAttrName當傳入 "Obsolete"洏非"ObsoleteAttribute"、否則取不到
 /// </param>
 /// <returns></returns>
 	public static IEnumerable<INamedTypeSymbol> YieldTypeWithAttr(

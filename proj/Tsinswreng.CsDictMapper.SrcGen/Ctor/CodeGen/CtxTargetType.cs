@@ -7,7 +7,7 @@
 // namespace Tsinswreng.CsDictMapper.Ctor.CodeGen;
 
 
-// public class CtxTargetType{
+// public  partial class CtxTargetType{
 // 	public CtxCtor CtxCtor{get;set;}
 // 	public INamedTypeSymbol TypeSymbol{get;set;}
 // 	public CtxTargetType(
@@ -32,7 +32,7 @@
 // }
 
 
-// public class GenTargetType{
+// public  partial class GenTargetType{
 
 // 	public CtxTargetType CtxTargetType{get;set;}
 

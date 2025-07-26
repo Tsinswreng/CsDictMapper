@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Tsinswreng.CsDictMapper.SrcGen;
 
-public class CtxDictGen{
+public  partial class CtxDictGen{
 	/// <summary>
 	/// 包含[DictType(typeof(TargetType))]特性的类(DictCtx)
 	/// </summary>

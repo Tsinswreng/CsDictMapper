@@ -4,7 +4,7 @@ using Tsinswreng.CsDictMapper.SrcGen.Ctx;
 namespace Tsinswreng.CsDictMapper.SrcGen;
 
 [Generator]
-public class DictGen: ISourceGenerator{
+public  partial class DictGen: ISourceGenerator{
 	public void Initialize(GeneratorInitializationContext context) {
 		// 注册语法接收器来捕获标记了DictTypeAttribute的类
 		context.RegisterForSyntaxNotifications(() => new DictTypeSyntaxReceiver());
