@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Tsinswreng.CsDictMapper;
 
 
-public interface IDictMapperForOneType{
+public  partial interface IDictMapperForOneType{
 	public Type TargetType{get;}
 	public IDictionary<str, object?> ToDictShallow(object Obj);
 	public IDictionary<str, Type> GetTypeDictShallow();
@@ -13,6 +13,6 @@ public interface IDictMapperForOneType{
 }
 
 
-// public interface I_Type_Mapper{
+// public  partial interface I_Type_Mapper{
 // 	public IDictionary<Type>
 // }
