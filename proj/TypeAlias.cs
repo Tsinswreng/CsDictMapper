@@ -10,6 +10,7 @@ global using u64 = System.UInt64;
 global using f32 = System.Single;
 global using f64 = System.Double;
 global using str = System.String;
+global using obj = object;
 global using nil = object;
 global using static Tsinswreng.CsDictMapper.Nil;
 //#pragma warning restore CS8981
