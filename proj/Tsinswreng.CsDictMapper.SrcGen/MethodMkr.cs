@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Tsinswreng.CsDictMapper.Tools;
 
 namespace Tsinswreng.CsDictMapper.SrcGen;
 

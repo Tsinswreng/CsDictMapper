@@ -5,8 +5,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Tsinswreng.CsDictMapper.SrcGen;
 // 语法接收器，用于定位所有包含DictType特性的类(一般只有一個)
-public  partial class DictTypeSyntaxReceiver : ISyntaxReceiver {
-	public List<ClassDeclarationSyntax> DictCtxClasses { get; } = new();
+public partial class DictTypeSyntaxReceiver : ISyntaxReceiver {
+	public IList<ClassDeclarationSyntax> DictCtxClasses { get; } = new List<ClassDeclarationSyntax>();
 
 	public void OnVisitSyntaxNode(SyntaxNode syntaxNode) {
 		if (syntaxNode is ClassDeclarationSyntax classDecl &&

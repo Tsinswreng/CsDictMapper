@@ -19,7 +19,7 @@ internal class Logger{
 
 	public static void Debug(string Path, string s){
 #if TswG_DEBUG
-		var Base = @"E:\_code\CsNgaq\Ngaq.Core\Tsinswreng.CsDictMapper.LogDir";
+		var Base = @"E:\_code\CsNgaq\Tsinswreng.CsDictMapper.LogDir";
 		Directory.CreateDirectory(Base);
 		Path = $"{Base}/"+Path;
 		File.WriteAllText(""+Path, s);

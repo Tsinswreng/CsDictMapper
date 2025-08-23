@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Tsinswreng.CsDictMapper.Tools;
+namespace Tsinswreng.CsDictMapper.SrcGen;
 
 public static class CodeTool{
 
