@@ -11,8 +11,10 @@ public  partial class CtxDictCtx{
 	/// <summary>
 	/// 包含[DictType(typeof(TargetType))]特性的类(DictCtx)
 	/// </summary>
-	public ClassDeclarationSyntax DictCtxClass { get;set; }
+	[Obsolete("先解析成NamedSymbol再傳入")]
+	public ClassDeclarationSyntax? DictCtxClass { get;set; }
 	public GeneratorExecutionContext ExeCtx{get;set;}
+	[Obsolete("傳NamedSymbol")]
 	public CtxDictCtx(
 		GeneratorExecutionContext ExeCtx
 		,ClassDeclarationSyntax DictCtxClass
@@ -21,13 +23,25 @@ public  partial class CtxDictCtx{
 		this.ExeCtx = ExeCtx;
 		Init();
 	}
+
+	public CtxDictCtx(
+		GeneratorExecutionContext ExeCtx
+		,INamedTypeSymbol DictTypeClassSymbol
+	){
+		this.ExeCtx = ExeCtx;
+		this.DictTypeClassSymbol = DictTypeClassSymbol;
+		Init();
+	}
 	bool _Inited = false;
 	public CtxDictCtx? Init(){
 		if(_Inited){
 			return this;
 		}
-		SemanticModel = ExeCtx.Compilation.GetSemanticModel(DictCtxClass.SyntaxTree);
-		DictTypeClassSymbol = SemanticModel.GetDeclaredSymbol(DictCtxClass) as INamedTypeSymbol;
+		if(DictCtxClass != null){
+			SemanticModel = ExeCtx.Compilation.GetSemanticModel(DictCtxClass.SyntaxTree);
+			DictTypeClassSymbol = SemanticModel.GetDeclaredSymbol(DictCtxClass) as INamedTypeSymbol;
+		}
+
 		if(DictTypeClassSymbol == null){
 			return null;
 		}
@@ -181,7 +195,9 @@ public partial class {{ClsName}} : global::{{N.NsDictMapper}}.{{N.IDictMapperFor
 // 	}
 
 	public str MkFile_Main(){
-		var ClsName = CtxDictCtx.DictCtxClass.Identifier.Text;
+		//var ClsName = CtxDictCtx.DictCtxClass.Identifier.Text;
+		var ClsName = CtxDictCtx.DictTypeClassSymbol?.Name;
+
 		var N = ConstName.Inst;
 		var Ns = CtxDictCtx.DictCtxNsStr;
 var Cls = $$"""

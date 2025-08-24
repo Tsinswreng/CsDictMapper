@@ -1,10 +1,10 @@
 #pragma warning disable RS1035
-//#define TswG_DEBUG
+#define TswG_DEBUG
 namespace Tsinswreng.CsDictMapper.SrcGen;
 using System.IO;
 
 internal class Logger{
-	public static string Path = "./Tsinswreng.CsDictMapper.log.txt";
+	public static string Path = "E:/_code/CsNgaq/Tsinswreng.CsDictMapper.log.txt";
 	public static void Append(string s){
 #if TswG_DEBUG
 		File.AppendAllText(Path, s+"\n");
