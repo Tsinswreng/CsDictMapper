@@ -170,7 +170,15 @@ $$"""
 		var properties = CtxTargetType.PublicProps;
 		var dictEntries = properties.Select(p =>{
 			var ResolvedType = CodeTool.ResolveFullTypeFitsTypeof(p.Type);
-			return "{"+$""" o.{p.Name} = ({ResolvedType})(d.TryGetValue("{p.Name}", out var Got)? Got: o.{p.Name}) ; """+"}";
+			//return "{"+$""" o.{p.Name} = ({ResolvedType})(d.TryGetValue("{p.Name}", out var Got)? Got: o.{p.Name}) ; """+"}";
+return
+"{\n"
++$$"""
+if(  d.TryGetValue("{{p.Name}}", out var Got)  ){
+	o.{{p.Name}} = ({{ResolvedType}})Got;
+}
+"""
++"\n}\n";
 		});
 		var N = ConstName.Inst;
 		var S = SymbolWithNamespace.Inst;
