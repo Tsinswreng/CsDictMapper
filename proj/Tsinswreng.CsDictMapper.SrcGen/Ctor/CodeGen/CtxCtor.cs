@@ -9,9 +9,9 @@
 
 // public  partial class CtxCtor{
 
-// 	/// <summary>
+// 	
 // 	/// 包含[Ctor]特性的类(DictCtx)
-// 	/// </summary>
+// 	
 // 	public ClassDeclarationSyntax CtorAttrClass { get;set; }
 // 	public GeneratorExecutionContext ExeCtx{get;set;}
 // 	public CtxCtor(
@@ -57,9 +57,9 @@
 
 // public  partial class GenDictCtx{
 
-// 	/// <summary>
+// 	
 // 	///
-// 	/// </summary>
+// 	
 // 	public CtxCtor Ctx_DictCtx{get;set;}
 
 // 	public GenDictCtx(CtxCtor Ctx_DictCtx){
@@ -153,9 +153,9 @@
 // 	}
 
 
-// /// <summary>
+// 
 // /// 取類型芝有[DictType]者
-// /// </summary>
+// 
 // /// <param name="classSymbol"></param>
 // /// <returns></returns>
 // 	public static IEnumerable<INamedTypeSymbol> YieldTypeWithDictTypeAttr(INamedTypeSymbol classSymbol) {

@@ -8,9 +8,7 @@ namespace Tsinswreng.CsDictMapper.SrcGen.Ctx;
 
 public  partial class CtxDictCtx{
 
-	/// <summary>
 	/// 包含[DictType(typeof(TargetType))]特性的类(DictCtx)
-	/// </summary>
 	[Obsolete("先解析成NamedSymbol再傳入")]
 	public ClassDeclarationSyntax? DictCtxClass { get;set; }
 	public GeneratorExecutionContext ExeCtx{get;set;}
@@ -83,9 +81,7 @@ public  partial class CtxDictCtx{
 
 public  partial class GenDictCtx{
 
-	/// <summary>
 	///
-	/// </summary>
 	public CtxDictCtx CtxDictCtx{get;set;}
 
 	public GenDictCtx(CtxDictCtx Ctx_DictCtx){
@@ -225,9 +221,7 @@ public partial class {{ClsName}}: {{N.NsDictMapper}}.{{N.DictMapper}} {
 // 		return MkNs(ClsCode);
 // 	}
 
-	/// <summary>
 	/// 見Example.cs之namespace UserDictCtxNs{ namespace NsA{ ...}}...
-	/// </summary>
 	/// <param name="ClassCode"></param>
 	/// <param name="TargetNs"></param>
 	/// <returns></returns>
@@ -255,9 +249,7 @@ public partial class {{ClsName}}: {{N.NsDictMapper}}.{{N.DictMapper}} {
 // 	}
 
 
-/// <summary>
 /// 取類型芝有[DictType]者
-/// </summary>
 /// <param name="classSymbol"></param>
 /// <returns></returns>
 [Obsolete("改用GetDictTypeAttrParam 緣此不支持Recursive參數")]

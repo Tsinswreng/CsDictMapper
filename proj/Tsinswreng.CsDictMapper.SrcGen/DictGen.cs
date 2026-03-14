@@ -51,9 +51,9 @@ public partial class DictGen: ISourceGenerator{
 
 //TODO 抽取至共ʹ庫
 internal static class SymbolExtensions{
-	/// <summary>
+	
 	/// 递归拿到某个命名空间下所有命名类型（包括嵌套命名空间、嵌套类型）。
-	/// </summary>
+	
 	internal static IEnumerable<INamedTypeSymbol> GetAllNamedTypes(this INamespaceSymbol ns){
 		foreach (var member in ns.GetMembers()){
 			switch (member){
@@ -74,9 +74,9 @@ internal static class SymbolExtensions{
 		}
 	}
 
-	/// <summary>
+	
 	/// 递归拿到某个类型及其所有嵌套类型。
-	/// </summary>
+	
 	internal static IEnumerable<INamedTypeSymbol> GetAllNestedTypes(this INamedTypeSymbol type){
 		foreach (var nested in type.GetTypeMembers()){
 			yield return nested;
